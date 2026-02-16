@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anderson Faller | Em Breve</title>
+
+    <!-- Fontes Google: Montserrat e Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#2C3E50',  /* Azul Ardósia Profundo */
+                            bg: '#F8F9FA',    /* Off-White */
+                            gray: '#7F8C8D',  /* Cinza Frio */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                        'fade-in': 'fadeIn 1.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-bg text-brand-dark min-h-screen flex flex-col items-center justify-center p-6 overflow-hidden relative">
+
+    <!-- Elemento Decorativo de Fundo (Sutil) -->
+    <div class="absolute top-0 left-0 w-full h-2 bg-brand-dark"></div>
+
+    <main class="text-center z-10">
+        
+        <!-- Pequeno texto superior -->
+        <p class="font-sans text-brand-gray tracking-[0.3em] text-sm md:text-base uppercase mb-4 animate-fade-in opacity-0" style="animation-delay: 0.2s;">
+            faller.one
+        </p>
+
+        <!-- Nome Gigante -->
+        <h1 class="font-heading font-black text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-tight mb-6 animate-fade-in-up opacity-0 text-brand-dark">
+            Anderson<br class="md:hidden"> Faller
+        </h1>
+
+        <!-- Linha divisória -->
+        <div class="w-16 h-1 bg-brand-dark mx-auto mb-8 animate-fade-in-up opacity-0" style="animation-delay: 0.3s;"></div>
+
+        <!-- Contato Discreto -->
+        <div class="animate-fade-in-up opacity-0" style="animation-delay: 0.5s;">
+            <a href="mailto:anderson.faller@gmail.com" class="font-sans text-brand-gray hover:text-brand-dark transition-colors border-b border-transparent hover:border-brand-dark pb-0.5">
+                TALK TO ME
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Rodapé Fixo -->
+    <footer class="absolute bottom-6 w-full text-center animate-fade-in opacity-0" style="animation-delay: 1s;">
+        <span class="font-heading font-bold text-2xl text-brand-dark/10">AF</span>
+    </footer>
+
+</body>
+</html>
