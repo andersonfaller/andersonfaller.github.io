@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +46,9 @@
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(44, 62, 80, 0.1), 0 2px 4px -1px rgba(44, 62, 80, 0.06)',
                     }
                 }
             }
@@ -110,6 +114,21 @@
     </style>
 </head>
 <body class="bg-brand-bg text-brand-dark overflow-x-hidden selection:bg-brand-dark selection:text-white">
+
+    <!-- ================= LIGHTS OUT PUZZLE OVERLAY ================= -->
+    <div id="lights-out-overlay" class="fixed inset-0 z-[100] bg-brand-bg flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="text-center mb-8 animate-fade-in-up" style="animation-delay: 0.1s;">
+            <p class="font-sans text-brand-gray tracking-[0.3em] text-sm md:text-base uppercase">faller.one</p>
+        </div>
+        
+        <!-- Grid 5x5 -->
+        <div id="puzzle-grid" class="grid grid-cols-5 gap-1.5 md:gap-2 p-3 md:p-4 bg-white rounded-xl shadow-soft animate-fade-in-up" style="animation-delay: 0.3s;">
+            <!-- Botões injetados via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Main Site Content (Escondido inicialmente) -->
+    <div id="main-site" class="opacity-0 transition-opacity duration-1000 pointer-events-none" style="display: none;">
 
     <!-- Bubbles Background Container -->
     <div id="bubbles-container" class="fixed inset-0 pointer-events-none z-0"></div>
@@ -222,6 +241,29 @@
         </h2>
         
         <div class="space-y-12">
+            <!-- Novo Paper -->
+            <article class="group">
+                <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
+                    <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2026</span>
+                    <div>
+                        <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
+                            Detection of oil leak and seawater influx through partial ruptures in subsea petroleum production pipelines
+                        </h3>
+                        <p class="font-sans text-sm text-brand-dark/80 mt-2">
+                            Authors: Barrionuevo, D. C., Oliveira, G. H., Faller, A. C., Vieira, S. C., Assmann, B. W., Araújo, J. C. D., & Pavlov, A.
+                        </p>
+                        <p class="font-sans text-sm text-brand-gray mt-1 italic">
+                            Journal of the Brazilian Society of Mechanical Sciences and Engineering, Vol. 48, Issue 7
+                        </p>
+                        <!-- Links -->
+                        <div class="mt-2 text-xs font-mono text-brand-dark/70">
+                            <a href="https://doi.org/10.1007/s40430-026-06488-2" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
+                            <a href="publications/s40430-026-06488-2.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
             <!-- Item 1 (Frontiers) -->
             <article class="group">
                 <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
@@ -330,15 +372,15 @@
                 <div>
                     <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">AI & Physics</h3>
                     <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        I research the intersection between physical modeling and data-driven approaches. I apply Machine Learning to solve complex inverse problems in fluid dynamics and multiphase flow.
+                        My research lies at the intersection of rigorous physical modeling and data-driven approaches. I apply Machine Learning to solve complex inverse problems in fluid dynamics and multiphase flow, bridging the gap between experimental data and theoretical models.
                     </p>
                 </div>
 
-                <!-- Interest 2: Programming -->
+                <!-- Interest 2: Programming (New) -->
                 <div>
                     <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Programming</h3>
                     <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Mainly Python for scientific computing and data visualization.
+                        I view code as a medium for structure and logic. From architecting robust full-stack web solutions to developing scientific computing pipelines in Python, I focus on writing clean, maintainable software that solves complex problems efficiently.
                     </p>
                 </div>
 
@@ -346,7 +388,7 @@
                 <div>
                     <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Language Models</h3>
                     <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Practical applications of LLMs within engineering and scientific domains to optimize technical workflows and assist in complex problem-solving. Previously, I also explored AI safety and alignment through my work on <a href="https://github.com/andersonfaller/detoxlm" target="_blank" class="text-brand-dark font-medium hover:underline">DetoxLM</a> <a href="publications/DetoxLM - Anderson Faller - Trabalho Final.pdf" target="_blank" class="font-mono text-xs text-brand-dark/70 hover:text-brand-dark hover:underline ml-1 transition-all">[pdf]</a>.
+                        I am highly interested in the practical applications of Large Language Models (LLMs) within engineering and scientific domains. My focus is on leveraging these models to optimize technical workflows and assist in complex problem-solving. Previously, I also explored AI safety and alignment through my work on <a href="https://github.com/andersonfaller/detoxlm" target="_blank" class="text-brand-dark font-medium hover:underline">DetoxLM</a> <a href="publications/DetoxLM - Anderson Faller - Trabalho Final.pdf" target="_blank" class="font-mono text-xs text-brand-dark/70 hover:text-brand-dark hover:underline ml-1 transition-all">[pdf]</a>.
                     </p>
                 </div>
 
@@ -354,7 +396,7 @@
                 <div>
                     <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Chess</h3>
                     <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        An amateur player with a deep appreciation for the game's complexity. Also interested in chess programming and engine development. Challenge me on <a href="https://www.chess.com/member/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Chess.com</a> or <a href="https://lichess.org/@/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Lichess</a>. Also, try my <a href="http://faller.one/blind-chess-terminal" target="_blank" class="text-brand-dark font-medium hover:underline">Blind Chess Terminal app</a>.
+                        An amateur player with a deep appreciation for the game's complexity. My interest extends beyond the board into chess programming and engine development. Challenge me on <a href="https://www.chess.com/member/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Chess.com</a> or <a href="https://lichess.org/@/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Lichess</a>. Also, try my <a href="http://faller.one/blind-chess-terminal" target="_blank" class="text-brand-dark font-medium hover:underline">Blind Chess Terminal app</a>.
                     </p>
                 </div>
 
@@ -362,7 +404,7 @@
                 <div>
                     <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Abstract Strategy Games</h3>
                     <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Beyond chess, I explore the mechanics of games like Tak and Lines of Action (LoA). Check out my simple <a href="http://faller.one/loa" target="_blank" class="text-brand-dark font-medium hover:underline">LoA engine implementation here</a>.
+                        Beyond chess, I explore the mechanics of games like Tak and Lines of Action (LoA). I enjoy analyzing their unique emergent complexity. Check out my simple <a href="http://faller.one/loa" target="_blank" class="text-brand-dark font-medium hover:underline">LoA engine implementation here</a>.
                     </p>
                 </div>
 
@@ -370,7 +412,7 @@
                 <div>
                     <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Music & Instruments</h3>
                     <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Guitar, pedals, synths. Heavy metal, prog rock, and indie rock. Some casual music experiments on <a href="https://soundcloud.com/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">SoundCloud</a>.
+                        Music provides a great counterbalance to technical work. My musical taste leans towards heavy metal, progressive rock, and indie rock. I enjoy the discipline of learning instruments and the creative energy of playing. You can listen to some of my casual musical experiments on <a href="https://soundcloud.com/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">SoundCloud</a>.
                     </p>
                 </div>
 
@@ -378,7 +420,7 @@
                 <div>
                     <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Pop Cosmology & Astrophysics</h3>
                     <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Black holes and origins of spacetime. What happens in extreme conditions?
+                        Fascinated by the vastness of the universe, black holes, and the origins of spacetime. I enjoy reading accessible literature on the subject to grasp the macro-scale mechanics of our reality and our place within it.
                     </p>
                 </div>
 
@@ -386,7 +428,7 @@
                 <div>
                     <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Pop Quantum Physics</h3>
                     <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        What is reality? Superposition, entanglement, non-locality and some non-intuitive interpretations fascinate me.
+                        Intrigued by the counter-intuitive nature of the quantum realm. I enjoy exploring concepts like entanglement and superposition through popular science, balancing my deterministic engineering background with the probabilistic wonders of nature.
                     </p>
                 </div>
 
@@ -428,7 +470,7 @@
         </h2>
         
         <div class="flex flex-col items-center justify-center">
-            <iframe src="https://lichess.org/training/frame?theme=grey&bg=light" style="width: 100%; max-width: 400px; aspect-ratio: 10/11;" allowtransparency="true" frameborder="0" class="rounded-lg shadow-md border border-brand-light"></iframe>
+            <iframe src="https://lichess.org/training/frame?theme=grey&bg=light" style="width: 100%; max-width: 400px; aspect-ratio: 5/6;" allowtransparency="true" frameborder="0" class="rounded-lg shadow-md border border-brand-light"></iframe>
             <p class="font-sans text-xs text-brand-gray mt-4">
                 Source: <a href="https://lichess.org" target="_blank" class="hover:text-brand-dark hover:underline transition-colors">Lichess</a>
             </p>
@@ -445,6 +487,8 @@
         <span class="font-heading font-bold text-2xl text-brand-dark/20">AF</span>
         <p class="text-xs font-sans mt-4">&copy; <span id="year"></span> Anderson Faller</p>
     </footer>
+
+    </div> <!-- Fim do main-site wrapper -->
 
     <!-- Scripts -->
     <script>
@@ -473,8 +517,104 @@
         // Revela a página suavemente após o carregamento
         window.addEventListener('load', () => {
             document.body.style.opacity = '1';
-            createBubbles(); // Inicia as bolhas ao carregar
+            initPuzzle(); // Inicia o puzzle ao carregar ao invés das bolhas diretamente
         });
+
+        // ================= LIGHTS OUT PUZZLE SCRIPT =================
+        let puzzleGrid = Array(5).fill().map(() => Array(5).fill(false));
+        let puzzleSolved = false;
+
+        function initPuzzle() {
+            const gridElement = document.getElementById('puzzle-grid');
+            gridElement.innerHTML = ''; // Limpa caso seja necessário reiniciar
+
+            // Gera um estado embaralhado e garantidamente resolvível
+            for(let i = 0; i < 15; i++) {
+                let r = Math.floor(Math.random() * 5);
+                let c = Math.floor(Math.random() * 5);
+                toggleInternal(r, c);
+            }
+            
+            // Garante que o jogo não inicie já resolvido
+            if(checkWinCondition()) toggleInternal(0,0);
+
+            // Renderiza os botões
+            for (let r = 0; r < 5; r++) {
+                for (let c = 0; c < 5; c++) {
+                    const btn = document.createElement('button');
+                    btn.id = `cell-${r}-${c}`;
+                    // Cores de alto contraste: brand-dark (Ligado) vs brand-light (Desligado)
+                    btn.className = `w-12 h-12 sm:w-14 sm:h-14 rounded-md transition-all duration-300 cursor-pointer hover:opacity-80 active:scale-95 ${puzzleGrid[r][c] ? 'bg-brand-dark shadow-inner' : 'bg-brand-light'}`;
+                    btn.onclick = () => handleCellClick(r, c);
+                    gridElement.appendChild(btn);
+                }
+            }
+        }
+
+        function toggleInternal(r, c) {
+            const dirs = [[0,0], [0,1], [0,-1], [1,0], [-1,0]];
+            for(let [dr, dc] of dirs) {
+                let nr = r + dr, nc = c + dc;
+                if(nr >= 0 && nr < 5 && nc >= 0 && nc < 5) {
+                    puzzleGrid[nr][nc] = !puzzleGrid[nr][nc];
+                }
+            }
+        }
+
+        function handleCellClick(r, c) {
+            if (puzzleSolved) return;
+            
+            toggleInternal(r, c);
+            
+            // Atualiza as classes do DOM visualmente
+            for (let row = 0; row < 5; row++) {
+                for (let col = 0; col < 5; col++) {
+                    const btn = document.getElementById(`cell-${row}-${col}`);
+                    if (puzzleGrid[row][col]) {
+                        btn.className = 'w-12 h-12 sm:w-14 sm:h-14 rounded-md transition-all duration-300 cursor-pointer hover:opacity-80 active:scale-95 bg-brand-dark shadow-inner';
+                    } else {
+                        btn.className = 'w-12 h-12 sm:w-14 sm:h-14 rounded-md transition-all duration-300 cursor-pointer hover:opacity-80 active:scale-95 bg-brand-light';
+                    }
+                }
+            }
+
+            if (checkWinCondition()) {
+                puzzleSolved = true;
+                setTimeout(unlockSite, 500); // Pequeno delay satisfatório após o último clique
+            }
+        }
+
+        function checkWinCondition() {
+            // Verifica se todos os quadrados estão false (desligados)
+            return puzzleGrid.every(row => row.every(cell => !cell));
+        }
+
+        function unlockSite() {
+            const overlay = document.getElementById('lights-out-overlay');
+            const mainSite = document.getElementById('main-site');
+            
+            // Fade out do puzzle
+            overlay.style.opacity = '0';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                
+                // Prepara o site principal
+                mainSite.style.display = 'block';
+                
+                // Força o navegador a recalcular o layout antes de aplicar a opacidade
+                void mainSite.offsetWidth; 
+                
+                // Fade in do site
+                mainSite.style.opacity = '1';
+                mainSite.style.pointerEvents = 'auto';
+                
+                // Inicia os elementos visuais agora que o site está vísivel
+                createBubbles(); 
+                resizePcb(); // Recalcula as dimensões do Canvas PCB
+                
+            }, 1000); // Sincronizado com a duração da transição
+        }
 
         // ================= BUBBLES GENERATOR SCRIPT =================
         function createBubbles() {
@@ -699,8 +839,11 @@
             for (let pad of rightPads) drawPad(pad.x, pad.y, pad.color);
         }
 
-        resizePcb(); // Initialize
+        // A função resizePcb() será chamada dentro de unlockSite() quando o site for revelado.
     </script>
 
 </body>
 </html>
+
+
+```
