@@ -585,8 +585,11 @@
         }
 
         function checkWinCondition() {
-            // Verifica se todos os quadrados estão false (desligados)
-            return puzzleGrid.every(row => row.every(cell => !cell));
+            // Verifica se todos os quadrados estão false (desligados) OU todos true (ligados)
+            const allOff = puzzleGrid.every(row => row.every(cell => !cell));
+            const allOn = puzzleGrid.every(row => row.every(cell => cell));
+            
+            return allOff || allOn;
         }
 
         function unlockSite() {
@@ -844,6 +847,7 @@
 
 </body>
 </html>
+
 
 
 ```
