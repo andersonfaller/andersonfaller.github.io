@@ -117,375 +117,403 @@
     <!-- ================= LIGHTS OUT PUZZLE OVERLAY ================= -->
     <div id="lights-out-overlay" class="fixed inset-0 z-[100] bg-brand-bg flex flex-col items-center justify-center transition-opacity duration-1000">
         <div class="text-center mb-8 animate-fade-in-up" style="animation-delay: 0.1s;">
-            <p class="font-sans text-brand-gray tracking-[0.3em] text-sm md:text-base uppercase">faller.one</p>
+            <h1 class="font-heading font-black text-3xl md:text-4xl text-brand-dark mb-2 tracking-tight">faller.one</h1>
         </div>
         
         <!-- Grid 5x5 -->
         <div id="puzzle-grid" class="grid grid-cols-5 gap-1.5 md:gap-2 p-3 md:p-4 bg-white rounded-xl shadow-soft animate-fade-in-up" style="animation-delay: 0.3s;">
             <!-- Botões injetados via JavaScript -->
         </div>
+
+        <!-- Botão Discreto Light Chasing -->
+        <button onclick="openChasingModal()" class="mt-8 font-sans text-xs text-brand-gray hover:text-brand-dark transition-colors animate-fade-in-up" style="animation-delay: 0.5s;">
+            light chasing
+        </button>
+
+        <!-- Chasing Table Modal (Pop-up) -->
+        <div id="chasing-modal" class="absolute inset-0 z-10 bg-brand-bg/95 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-soft border border-brand-light relative max-w-[340px] w-full mx-4">
+                <button onclick="closeChasingModal()" class="absolute top-4 right-4 text-brand-gray hover:text-brand-dark transition-colors">
+                    <i class="ph ph-x text-lg"></i>
+                </button>
+                
+                <div class="text-center mb-6 mt-2">
+                    <p class="font-sans text-xs text-brand-gray">tip: when only bottom row is lit...</p>
+                </div>
+
+                <div class="grid grid-cols-[1fr_auto_1fr] gap-2 md:gap-4 text-center text-[10px] md:text-xs font-heading font-bold uppercase tracking-wider text-brand-gray mb-6">
+                    <div>bottom is</div>
+                    <div></div>
+                    <div>toggle on top</div>
+                </div>
+                
+                <div id="chasing-table-body" class="flex flex-col gap-3 md:gap-4">
+                    <!-- Linhas da tabela serão injetadas aqui -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Main Site Content (Escondido inicialmente) -->
     <div id="main-site" class="opacity-0 transition-opacity duration-1000 pointer-events-none" style="display: none;">
 
-    <!-- Bubbles Background Container -->
-    <div id="bubbles-container" class="fixed inset-0 pointer-events-none z-0"></div>
+        <!-- Bubbles Background Container -->
+        <div id="bubbles-container" class="fixed inset-0 pointer-events-none z-0"></div>
 
-    <!-- ================= HERO SECTION ================= -->
-    <section class="min-h-screen flex flex-col items-center justify-center p-6 relative z-10">
-        
-        <!-- Top Text -->
-        <p class="font-sans text-brand-gray tracking-[0.3em] text-sm md:text-base uppercase mb-4 animate-fade-in-up opacity-0" style="animation-delay: 0.1s;">
-            faller.one
-        </p>
+        <!-- ================= HERO SECTION ================= -->
+        <section class="min-h-screen flex flex-col items-center justify-center p-6 relative z-10">
+            
+            <!-- Top Text -->
+            <p class="font-sans text-brand-gray tracking-[0.3em] text-sm md:text-base uppercase mb-4 animate-fade-in-up opacity-0" style="animation-delay: 0.1s;">
+                faller.one
+            </p>
 
-        <!-- Main Name -->
-        <h1 class="font-heading font-black text-5xl md:text-7xl lg:text-9xl tracking-tighter leading-tight mb-6 animate-fade-in-up opacity-0 text-brand-dark text-center" style="animation-delay: 0.3s;">
-            Anderson<br class="md:hidden"> Faller
-        </h1>
+            <!-- Main Name -->
+            <h1 class="font-heading font-black text-5xl md:text-7xl lg:text-9xl tracking-tighter leading-tight mb-6 animate-fade-in-up opacity-0 text-brand-dark text-center" style="animation-delay: 0.3s;">
+                Anderson<br class="md:hidden"> Faller
+            </h1>
 
-        <!-- Divider -->
-        <div class="w-16 h-1 bg-brand-dark mx-auto mb-8 animate-fade-in-up opacity-0" style="animation-delay: 0.5s;"></div>
+            <!-- Divider -->
+            <div class="w-16 h-1 bg-brand-dark mx-auto mb-8 animate-fade-in-up opacity-0" style="animation-delay: 0.5s;"></div>
 
-        <!-- CTA -->
-        <div class="animate-fade-in-up opacity-0" style="animation-delay: 0.7s;">
-            <a href="mailto:anderson.faller@gmail.com" class="font-sans font-medium text-brand-gray hover:text-brand-dark transition-colors border-b border-transparent hover:border-brand-dark pb-0.5 tracking-wide">
-                CONTACT ME
-            </a>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 animate-fade-in-up flex flex-col items-center gap-2 cursor-pointer opacity-0" style="animation-delay: 1.5s; animation-fill-mode: forwards;">
-            <span class="text-[10px] uppercase tracking-widest text-brand-gray">Scroll</span>
-            <i class="ph ph-caret-down text-2xl text-brand-dark animate-bounce-slow"></i>
-        </div>
-    </section>
-
-
-    <!-- ================= BIO SECTION ================= -->
-    <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto reveal-on-scroll relative z-10">
-        <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-8 text-center md:text-left">
-            // Bio
-        </h2>
-        <p class="font-sans text-xl md:text-2xl font-light leading-relaxed text-brand-dark md:text-justify">
-            Jana's husband, Julia's father. I am a Control and Automation Engineer with a Master's degree in Petroleum Sciences and Engineering. Currently employed at Petrobras, I work in Oil Production Monitoring and Optimization, with a strong focus on Research and Development, specializing in the intersection of Scientific Computing and Artificial Intelligence.
-        </p>
-    </section>
-
-
-    <!-- ================= SOCIAL SECTION ================= -->
-    <section class="py-24 px-6 md:px-12 bg-white reveal-on-scroll relative z-10 shadow-sm">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 text-center">
-                // Connect
-            </h2>
-            <div class="flex justify-center gap-8 md:gap-16 flex-wrap">
-                <!-- Email -->
-                <a href="mailto:anderson.faller@gmail.com" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                    <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                        <i class="fa-solid fa-envelope text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                    </div>
-                    <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Email</span>
-                </a>
-
-                <!-- GitHub -->
-                <a href="https://github.com/andersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                    <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                        <i class="fa-brands fa-github text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                    </div>
-                    <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">GitHub</span>
-                </a>
-
-                <!-- LinkedIn -->
-                <a href="https://www.linkedin.com/in/anderson-faller-31420116/" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                    <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                        <i class="fa-brands fa-linkedin-in text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                    </div>
-                    <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">LinkedIn</span>
-                </a>
-                
-                <!-- X / Twitter -->
-                <a href="https://x.com/andersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                    <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                        <i class="fa-brands fa-x-twitter text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                    </div>
-                    <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Twitter / X</span>
-                </a>
-
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/oandersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                    <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                        <i class="fa-brands fa-instagram text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                    </div>
-                    <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Instagram</span>
-                </a>
-
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/andersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                    <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                        <i class="fa-brands fa-facebook-f text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                    </div>
-                    <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Facebook</span>
+            <!-- CTA -->
+            <div class="animate-fade-in-up opacity-0" style="animation-delay: 0.7s;">
+                <a href="mailto:anderson.faller@gmail.com" class="font-sans font-medium text-brand-gray hover:text-brand-dark transition-colors border-b border-transparent hover:border-brand-dark pb-0.5 tracking-wide">
+                    CONTACT ME
                 </a>
             </div>
-        </div>
-    </section>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 animate-fade-in-up flex flex-col items-center gap-2 cursor-pointer opacity-0" style="animation-delay: 1.5s; animation-fill-mode: forwards;">
+                <span class="text-[10px] uppercase tracking-widest text-brand-gray">Scroll</span>
+                <i class="ph ph-caret-down text-2xl text-brand-dark animate-bounce-slow"></i>
+            </div>
+        </section>
 
 
-    <!-- ================= PUBLICATIONS SECTION ================= -->
-    <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto reveal-on-scroll relative z-10">
-        <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 border-b border-brand-light pb-4">
-            // Publications
-        </h2>
-        
-        <div class="space-y-12">
-            <!-- Novo Paper -->
-            <article class="group">
-                <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                    <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2026</span>
-                    <div>
-                        <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                            Detection of oil leak and seawater influx through partial ruptures in subsea petroleum production pipelines
-                        </h3>
-                        <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                            Authors: Barrionuevo, D. C., Oliveira, G. H., Faller, A. C., Vieira, S. C., Assmann, B. W., Araújo, J. C. D., & Pavlov, A.
-                        </p>
-                        <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                            Journal of the Brazilian Society of Mechanical Sciences and Engineering, Vol. 48, Issue 7
-                        </p>
-                        <!-- Links -->
-                        <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                            <a href="https://doi.org/10.1007/s40430-026-06488-2" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                            <a href="publications/s40430-026-06488-2.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Item 1 (Frontiers) -->
-            <article class="group">
-                <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                    <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2026</span>
-                    <div>
-                        <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                            Steady-state 1D two-phase flow differentiable modeling: learning from field data and inverse problem applications in oil wells
-                        </h3>
-                        <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                            Authors: Faller, A. C., Vieira, S. C., & Castro, M. S.
-                        </p>
-                        <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                            Frontiers in Chemical Engineering, Vol. 7
-                        </p>
-                        <!-- Links -->
-                        <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                            <a href="https://www.frontiersin.org/journals/chemical-engineering/articles/10.3389/fceng.2025.1687048/full" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                            <a href="publications/Faller et all - Differentiable Modeling - Published.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Item 2 (SPE Brazil FATC) -->
-            <article class="group">
-                <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                    <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2024</span>
-                    <div>
-                        <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                            Oil Leak and Seawater Influx Through Partial Ruptures in Subsea Petroleum Production Pipelines
-                        </h3>
-                        <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                            Authors: Barrionuevo, D. C., Faller, A. C., Assman, B. W., Oliveira, G. H., Araújo, J. C. D., Vieira, S. C., & Rodrigues, T. M.
-                        </p>
-                        <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                            SPE Brazil Flow Assurance Technology Congress (FATC)
-                        </p>
-                        <!-- Links -->
-                        <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                            <a href="https://spebrazilfatc.com.br/wp-content/uploads/2024/12/095-Oil-Leak-and-Seawater-Influx-Through-Partial-Ruptures-in-Subsea-Petroleum-Production-Pipelines.pdf" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                            <a href="publications/095-Oil-Leak-and-Seawater-Influx-Through-Partial-Ruptures-in-Subsea-Petroleum-Production-Pipelines.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Item 3 (COBEM) -->
-            <article class="group">
-                <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                    <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2023</span>
-                    <div>
-                        <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                            Data-Driven Multiphase Flow Parameters Prediction Capabilities and Limitations on a Real Oil Well Production Data
-                        </h3>
-                        <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                            Authors: Faller, A. C., Vieira, S. C., Foresti, B. P., Fabro, A. T., & Castro, M. S.
-                        </p>
-                        <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                            27th ABCM International Congress of Mechanical Engineering (COBEM)
-                        </p>
-                        <!-- Links -->
-                        <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                            <a href="https://doi.org/10.26678/ABCM.COBEM2023.COB2023-1242" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                            <a href="publications/Faller_VFM_COBEM_2023_rev_final.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-             <!-- Item 4 (JEM) -->
-             <article class="group">
-                <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                    <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2023</span>
-                    <div>
-                        <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                            A Machine Learning Approach on Two-Phase Flow Characterization and Calculation Based on a Large Experimental Dataset
-                        </h3>
-                        <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                            Authors: Faller, A. C., Paulo, P. H. C., Vieira, S. C., Fabro, A. T., & Castro, M. S.
-                        </p>
-                        <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                            7th Multiphase Flow Journeys (JEM)
-                        </p>
-                        <!-- Links -->
-                        <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                            <a href="https://abcm.org.br/upload/files/Anais%20JEM%202023.pdf" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                            <a href="publications/Anais JEM 2023 - p 35-36.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </div>
-    </section>
-
-
-    <!-- ================= INTERESTS SECTION ================= -->
-    <section class="py-24 px-6 md:px-12 bg-white reveal-on-scroll relative z-10 shadow-sm">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 border-b border-brand-light pb-4">
-                // Interests
+        <!-- ================= BIO SECTION ================= -->
+        <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto reveal-on-scroll relative z-10">
+            <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-8 text-center md:text-left">
+                // Bio
             </h2>
+            <p class="font-sans text-xl md:text-2xl font-light leading-relaxed text-brand-dark md:text-justify">
+                Jana's husband, Julia's father. I am a Control and Automation Engineer with a Master's degree in Petroleum Sciences and Engineering. Currently employed at Petrobras, I work in Oil Production Monitoring and Optimization, with a strong focus on Research and Development, specializing in the intersection of Scientific Computing and Artificial Intelligence.
+            </p>
+        </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                
-                <!-- Interest 1: AI & Physics -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">AI & Physics</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        My research lies at the intersection of rigorous physical modeling and data-driven approaches. I apply Machine Learning to solve complex inverse problems in fluid dynamics and multiphase flow, bridging the gap between experimental data and theoretical models.
-                    </p>
-                </div>
 
-                <!-- Interest 2: Programming (New) -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Programming</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        I view code as a medium for structure and logic. From architecting robust full-stack web solutions to developing scientific computing pipelines in Python, I focus on writing clean, maintainable software that solves complex problems efficiently.
-                    </p>
-                </div>
+        <!-- ================= SOCIAL SECTION ================= -->
+        <section class="py-24 px-6 md:px-12 bg-white reveal-on-scroll relative z-10 shadow-sm">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 text-center">
+                    // Connect
+                </h2>
+                <div class="flex justify-center gap-8 md:gap-16 flex-wrap">
+                    <!-- Email -->
+                    <a href="mailto:anderson.faller@gmail.com" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
+                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
+                            <i class="fa-solid fa-envelope text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
+                        </div>
+                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Email</span>
+                    </a>
 
-                <!-- Interest 3: Language Models -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Language Models</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        I am highly interested in the practical applications of Large Language Models (LLMs) within engineering and scientific domains. My focus is on leveraging these models to optimize technical workflows and assist in complex problem-solving. Previously, I also explored AI safety and alignment through my work on <a href="https://github.com/andersonfaller/detoxlm" target="_blank" class="text-brand-dark font-medium hover:underline">DetoxLM</a> <a href="publications/DetoxLM - Anderson Faller - Trabalho Final.pdf" target="_blank" class="font-mono text-xs text-brand-dark/70 hover:text-brand-dark hover:underline ml-1 transition-all">[pdf]</a>.
-                    </p>
-                </div>
+                    <!-- GitHub -->
+                    <a href="https://github.com/andersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
+                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
+                            <i class="fa-brands fa-github text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
+                        </div>
+                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">GitHub</span>
+                    </a>
 
-                <!-- Interest 4: Chess -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Chess</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        An amateur player with a deep appreciation for the game's complexity. My interest extends beyond the board into chess programming and engine development. Challenge me on <a href="https://www.chess.com/member/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Chess.com</a> or <a href="https://lichess.org/@/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Lichess</a>. Also, try my <a href="http://faller.one/blind-chess-terminal" target="_blank" class="text-brand-dark font-medium hover:underline">Blind Chess Terminal app</a>.
-                    </p>
-                </div>
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/anderson-faller-31420116/" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
+                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
+                            <i class="fa-brands fa-linkedin-in text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
+                        </div>
+                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">LinkedIn</span>
+                    </a>
+                    
+                    <!-- X / Twitter -->
+                    <a href="https://x.com/andersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
+                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
+                            <i class="fa-brands fa-x-twitter text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
+                        </div>
+                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Twitter / X</span>
+                    </a>
 
-                <!-- Interest 5: Abstract Strategy Games -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Abstract Strategy Games</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Beyond chess, I explore the mechanics of games like Tak and Lines of Action (LoA). I enjoy analyzing their unique emergent complexity. Check out my simple <a href="http://faller.one/loa" target="_blank" class="text-brand-dark font-medium hover:underline">LoA engine implementation here</a>.
-                    </p>
-                </div>
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/oandersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
+                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
+                            <i class="fa-brands fa-instagram text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
+                        </div>
+                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Instagram</span>
+                    </a>
 
-                <!-- Interest 6: Music & Instruments -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Music & Instruments</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Music provides a great counterbalance to technical work. My musical taste leans towards heavy metal, progressive rock, and indie rock. I enjoy the discipline of learning instruments and the creative energy of playing. You can listen to some of my casual musical experiments on <a href="https://soundcloud.com/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">SoundCloud</a>.
-                    </p>
-                </div>
-
-                <!-- Interest 7: Pop Cosmology & Astrophysics -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Pop Cosmology & Astrophysics</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Fascinated by the vastness of the universe, black holes, and the origins of spacetime. I enjoy reading accessible literature on the subject to grasp the macro-scale mechanics of our reality and our place within it.
-                    </p>
-                </div>
-
-                <!-- Interest 8: Pop Quantum Physics -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Pop Quantum Physics</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Intrigued by the counter-intuitive nature of the quantum realm. I enjoy exploring concepts like entanglement and superposition through popular science, balancing my deterministic engineering background with the probabilistic wonders of nature.
-                    </p>
-                </div>
-
-                <!-- Interest 9: Math -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Math</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed mb-4">
-                        Seriously, what the...
-                    </p>
-                    <a href="https://www.combinatorics.org/files/Surveys/ds7/ds7v5-2009/ds7-2009.html" target="_blank" class="block overflow-hidden rounded-lg border border-brand-light shadow-sm hover:shadow-md transition-all duration-300">
-                        <img src="images/square_packing_17.jpeg" alt="Best known optimal square packing for 17 squares" class="w-full h-auto hover:scale-105 transition-transform duration-500">
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/andersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
+                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
+                            <i class="fa-brands fa-facebook-f text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
+                        </div>
+                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Facebook</span>
                     </a>
                 </div>
-
-                <!-- Interest 10: Electronics -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Electronics</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Occasional design and prototyping. 
-                    </p>
-                </div>
-
-                <!-- Interest 11: Beer -->
-                <div>
-                    <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Beer</h3>
-                    <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                        Tasting, teaching and home brewing. Approx. 100 batches, some <a href="https://untappd.com/b/cervejaria-eisenbahn-ventura/1006781" target="_blank" class="text-brand-dark font-medium hover:underline">prizes</a> and stuff...
-                    </p>
-                </div>
-
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ================= DAILY PUZZLE SECTION ================= -->
-    <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto reveal-on-scroll relative z-10">
-        <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 border-b border-brand-light pb-4">
-            // Daily Puzzle
-        </h2>
-        
-        <div class="flex flex-col items-center justify-center">
-            <iframe src="https://lichess.org/training/frame?theme=grey&bg=light" style="width: 100%; max-width: 400px; aspect-ratio: 5/6;" allowtransparency="true" frameborder="0" class="rounded-lg shadow-md border border-brand-light"></iframe>
-            <p class="font-sans text-xs text-brand-gray mt-4">
-                Source: <a href="https://lichess.org" target="_blank" class="hover:text-brand-dark hover:underline transition-colors">Lichess</a>
-            </p>
-        </div>
-    </section>
 
-    <!-- ================= DECORATIVE PCB SECTION ================= -->
-    <section class="w-full overflow-hidden reveal-on-scroll">
-        <canvas id="pcbCanvas"></canvas>
-    </section>
+        <!-- ================= PUBLICATIONS SECTION ================= -->
+        <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto reveal-on-scroll relative z-10">
+            <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 border-b border-brand-light pb-4">
+                // Publications
+            </h2>
+            
+            <div class="space-y-12">
+                <!-- Novo Paper -->
+                <article class="group">
+                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
+                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2026</span>
+                        <div>
+                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
+                                Detection of oil leak and seawater influx through partial ruptures in subsea petroleum production pipelines
+                            </h3>
+                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
+                                Authors: Barrionuevo, D. C., Oliveira, G. H., Faller, A. C., Vieira, S. C., Assmann, B. W., Araújo, J. C. D., & Pavlov, A.
+                            </p>
+                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
+                                Journal of the Brazilian Society of Mechanical Sciences and Engineering, Vol. 48, Issue 7
+                            </p>
+                            <!-- Links -->
+                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
+                                <a href="https://doi.org/10.1007/s40430-026-06488-2" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
+                                <a href="publications/s40430-026-06488-2.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
 
-    <!-- Footer -->
-    <footer class="py-8 text-center text-brand-gray opacity-50 relative z-10">
-        <span class="font-heading font-bold text-2xl text-brand-dark/20">AF</span>
-        <p class="text-xs font-sans mt-4">&copy; <span id="year"></span> Anderson Faller</p>
-    </footer>
+                <!-- Item 1 (Frontiers) -->
+                <article class="group">
+                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
+                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2026</span>
+                        <div>
+                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
+                                Steady-state 1D two-phase flow differentiable modeling: learning from field data and inverse problem applications in oil wells
+                            </h3>
+                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
+                                Authors: Faller, A. C., Vieira, S. C., & Castro, M. S.
+                            </p>
+                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
+                                Frontiers in Chemical Engineering, Vol. 7
+                            </p>
+                            <!-- Links -->
+                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
+                                <a href="https://www.frontiersin.org/journals/chemical-engineering/articles/10.3389/fceng.2025.1687048/full" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
+                                <a href="publications/Faller et all - Differentiable Modeling - Published.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Item 2 (SPE Brazil FATC) -->
+                <article class="group">
+                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
+                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2024</span>
+                        <div>
+                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
+                                Oil Leak and Seawater Influx Through Partial Ruptures in Subsea Petroleum Production Pipelines
+                            </h3>
+                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
+                                Authors: Barrionuevo, D. C., Faller, A. C., Assman, B. W., Oliveira, G. H., Araújo, J. C. D., Vieira, S. C., & Rodrigues, T. M.
+                            </p>
+                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
+                                SPE Brazil Flow Assurance Technology Congress (FATC)
+                            </p>
+                            <!-- Links -->
+                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
+                                <a href="https://spebrazilfatc.com.br/wp-content/uploads/2024/12/095-Oil-Leak-and-Seawater-Influx-Through-Partial-Ruptures-in-Subsea-Petroleum-Production-Pipelines.pdf" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
+                                <a href="publications/095-Oil-Leak-and-Seawater-Influx-Through-Partial-Ruptures-in-Subsea-Petroleum-Production-Pipelines.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Item 3 (COBEM) -->
+                <article class="group">
+                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
+                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2023</span>
+                        <div>
+                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
+                                Data-Driven Multiphase Flow Parameters Prediction Capabilities and Limitations on a Real Oil Well Production Data
+                            </h3>
+                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
+                                Authors: Faller, A. C., Vieira, S. C., Foresti, B. P., Fabro, A. T., & Castro, M. S.
+                            </p>
+                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
+                                27th ABCM International Congress of Mechanical Engineering (COBEM)
+                            </p>
+                            <!-- Links -->
+                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
+                                <a href="https://doi.org/10.26678/ABCM.COBEM2023.COB2023-1242" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
+                                <a href="publications/Faller_VFM_COBEM_2023_rev_final.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                 <!-- Item 4 (JEM) -->
+                 <article class="group">
+                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
+                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2023</span>
+                        <div>
+                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
+                                A Machine Learning Approach on Two-Phase Flow Characterization and Calculation Based on a Large Experimental Dataset
+                            </h3>
+                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
+                                Authors: Faller, A. C., Paulo, P. H. C., Vieira, S. C., Fabro, A. T., & Castro, M. S.
+                            </p>
+                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
+                                7th Multiphase Flow Journeys (JEM)
+                            </p>
+                            <!-- Links -->
+                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
+                                <a href="https://abcm.org.br/upload/files/Anais%20JEM%202023.pdf" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
+                                <a href="publications/Anais JEM 2023 - p 35-36.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+
+        <!-- ================= INTERESTS SECTION ================= -->
+        <section class="py-24 px-6 md:px-12 bg-white reveal-on-scroll relative z-10 shadow-sm">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 border-b border-brand-light pb-4">
+                    // Interests
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    
+                    <!-- Interest 1: AI & Physics -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">AI & Physics</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            My research lies at the intersection of rigorous physical modeling and data-driven approaches. I apply Machine Learning to solve complex inverse problems in fluid dynamics and multiphase flow, bridging the gap between experimental data and theoretical models.
+                        </p>
+                    </div>
+
+                    <!-- Interest 2: Programming -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Programming</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            I view code as a medium for structure and logic. From architecting robust full-stack web solutions to developing scientific computing pipelines in Python, I focus on writing clean, maintainable software that solves complex problems efficiently.
+                        </p>
+                    </div>
+
+                    <!-- Interest 3: Language Models -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Language Models</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            I am highly interested in the practical applications of Large Language Models (LLMs) within engineering and scientific domains. My focus is on leveraging these models to optimize technical workflows and assist in complex problem-solving. Previously, I also explored AI safety and alignment through my work on <a href="https://github.com/andersonfaller/detoxlm" target="_blank" class="text-brand-dark font-medium hover:underline">DetoxLM</a> <a href="publications/DetoxLM - Anderson Faller - Trabalho Final.pdf" target="_blank" class="font-mono text-xs text-brand-dark/70 hover:text-brand-dark hover:underline ml-1 transition-all">[pdf]</a>.
+                        </p>
+                    </div>
+
+                    <!-- Interest 4: Chess -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Chess</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            An amateur player with a deep appreciation for the game's complexity. My interest extends beyond the board into chess programming and engine development. Challenge me on <a href="https://www.chess.com/member/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Chess.com</a> or <a href="https://lichess.org/@/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Lichess</a>. Also, try my <a href="http://faller.one/blind-chess-terminal" target="_blank" class="text-brand-dark font-medium hover:underline">Blind Chess Terminal app</a>.
+                        </p>
+                    </div>
+
+                    <!-- Interest 5: Abstract Strategy Games -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Abstract Strategy Games</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            Beyond chess, I explore the mechanics of games like Tak and Lines of Action (LoA). I enjoy analyzing their unique emergent complexity. Check out my simple <a href="http://faller.one/loa" target="_blank" class="text-brand-dark font-medium hover:underline">LoA engine</a> or try my custom puzzle variant <a href="https://faller.one/knights-out/" target="_blank" class="text-brand-dark font-medium hover:underline">Knights Out</a>.
+                        </p>
+                    </div>
+
+                    <!-- Interest 6: Music & Instruments -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Music & Instruments</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            Music provides a great counterbalance to technical work. My musical taste leans towards heavy metal, progressive rock, and indie rock. I enjoy the discipline of learning instruments and the creative energy of playing. You can listen to some of my casual musical experiments on <a href="https://soundcloud.com/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">SoundCloud</a>.
+                        </p>
+                    </div>
+
+                    <!-- Interest 7: Pop Cosmology & Astrophysics -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Pop Cosmology & Astrophysics</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            Fascinated by the vastness of the universe, black holes, and the origins of spacetime. I enjoy reading accessible literature on the subject to grasp the macro-scale mechanics of our reality and our place within it.
+                        </p>
+                    </div>
+
+                    <!-- Interest 8: Pop Quantum Physics -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Pop Quantum Physics</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            Intrigued by the counter-intuitive nature of the quantum realm. I enjoy exploring concepts like entanglement and superposition through popular science, balancing my deterministic engineering background with the probabilistic wonders of nature.
+                        </p>
+                    </div>
+
+                    <!-- Interest 9: Math -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Math</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed mb-4">
+                            Seriously, what the...
+                        </p>
+                        <a href="https://www.combinatorics.org/files/Surveys/ds7/ds7v5-2009/ds7-2009.html" target="_blank" class="block overflow-hidden rounded-lg border border-brand-light shadow-sm hover:shadow-md transition-all duration-300">
+                            <img src="images/square_packing_17.jpeg" alt="Best known optimal square packing for 17 squares" class="w-full h-auto hover:scale-105 transition-transform duration-500">
+                        </a>
+                    </div>
+
+                    <!-- Interest 10: Electronics -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Electronics</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            Occasional design and prototyping. 
+                        </p>
+                    </div>
+
+                    <!-- Interest 11: Beer -->
+                    <div>
+                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Beer</h3>
+                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
+                            Tasting, teaching and home brewing. Approx. 100 batches, some <a href="https://untappd.com/b/cervejaria-eisenbahn-ventura/1006781" target="_blank" class="text-brand-dark font-medium hover:underline">prizes</a> and stuff...
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= DAILY PUZZLE SECTION ================= -->
+        <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto reveal-on-scroll relative z-10">
+            <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 border-b border-brand-light pb-4">
+                // Daily Puzzle
+            </h2>
+            
+            <div class="flex flex-col items-center justify-center">
+                <iframe src="https://lichess.org/training/frame?theme=grey&bg=light" style="width: 100%; max-width: 400px; aspect-ratio: 5/6;" allowtransparency="true" frameborder="0" class="rounded-lg shadow-md border border-brand-light"></iframe>
+                <p class="font-sans text-xs text-brand-gray mt-4">
+                    Source: <a href="https://lichess.org" target="_blank" class="hover:text-brand-dark hover:underline transition-colors">Lichess</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= DECORATIVE PCB SECTION ================= -->
+        <section class="w-full overflow-hidden reveal-on-scroll">
+            <canvas id="pcbCanvas"></canvas>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-8 text-center text-brand-gray opacity-50 relative z-10">
+            <span class="font-heading font-bold text-2xl text-brand-dark/20">AF</span>
+            <p class="text-xs font-sans mt-4">&copy; <span id="year"></span> Anderson Faller</p>
+        </footer>
 
     </div> <!-- Fim do main-site wrapper -->
 
@@ -513,11 +541,67 @@
             observer.observe(element);
         });
 
-        // Revela a página suavemente após o carregamento
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '1';
-            initPuzzle(); // Inicia o puzzle ao carregar ao invés das bolhas diretamente
-        });
+        // ================= LIGHT CHASING MODAL SCRIPT =================
+        function openChasingModal() {
+            document.getElementById('chasing-modal').classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeChasingModal() {
+            document.getElementById('chasing-modal').classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        // Função responsável por construir as linhas e os quadrados da tabela
+        function renderChasingTable() {
+            const tableData = [
+                [[1,1,1,0,0], [0,1,0,0,0]],
+                [[1,1,0,1,1], [0,0,1,0,0]],
+                [[1,0,1,1,0], [0,0,0,0,1]],
+                [[1,0,0,0,1], [1,1,0,0,0]],
+                [[0,1,1,0,1], [1,0,0,0,0]],
+                [[0,1,0,1,0], [1,0,0,1,0]],
+                [[0,0,1,1,1], [0,0,0,1,0]]
+            ];
+            
+            const container = document.getElementById('chasing-table-body');
+            
+            // Só renderiza se não tiver elementos HTML dentro (ignora o comentário de texto)
+            if (container.children.length > 0) return; 
+
+            tableData.forEach(row => {
+                // Wrapper da linha (grid com 3 colunas: estado, flecha, ação)
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'grid grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4';
+
+                // Bloco esquerdo (Bottom Is)
+                const leftDiv = document.createElement('div');
+                leftDiv.className = 'flex gap-1 justify-center';
+                row[0].forEach(val => {
+                    const dot = document.createElement('div');
+                    dot.className = `w-3 h-3 md:w-4 md:h-4 rounded-sm ${val ? 'bg-brand-dark shadow-inner' : 'bg-brand-light'}`;
+                    leftDiv.appendChild(dot);
+                });
+
+                // Flecha central
+                const arrowDiv = document.createElement('div');
+                arrowDiv.className = 'text-brand-gray/50 text-xs';
+                arrowDiv.innerHTML = '<i class="ph ph-arrow-right"></i>';
+
+                // Bloco direito (Toggle on Top)
+                const rightDiv = document.createElement('div');
+                rightDiv.className = 'flex gap-1 justify-center';
+                row[1].forEach(val => {
+                    const dot = document.createElement('div');
+                    dot.className = `w-3 h-3 md:w-4 md:h-4 rounded-sm ${val ? 'bg-brand-dark shadow-inner' : 'bg-brand-light'}`;
+                    rightDiv.appendChild(dot);
+                });
+
+                // Monta a linha e adiciona ao container
+                rowDiv.appendChild(leftDiv);
+                rowDiv.appendChild(arrowDiv);
+                rowDiv.appendChild(rightDiv);
+                container.appendChild(rowDiv);
+            });
+        }
 
         // ================= LIGHTS OUT PUZZLE SCRIPT =================
         let puzzleGrid = Array(5).fill().map(() => Array(5).fill(false));
@@ -841,7 +925,13 @@
             for (let pad of rightPads) drawPad(pad.x, pad.y, pad.color);
         }
 
-        // A função resizePcb() será chamada dentro de unlockSite() quando o site for revelado.
+        // ================= INICIALIZAÇÃO GERAL =================
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            renderChasingTable(); // Prepara o modal da tabela logo no carregamento
+            initPuzzle(); // Inicia o puzzle
+        });
+
     </script>
 
 </body>
