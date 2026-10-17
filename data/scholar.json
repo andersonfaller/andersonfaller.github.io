@@ -1,0 +1,90 @@
+{
+  "profile": {
+    "id": "75eaBvIAAAAJ",
+    "name": "Anderson Carlos Faller",
+    "affiliation": "Petroleum Engineer, Petrobras",
+    "url": "https://scholar.google.com/citations?user=75eaBvIAAAAJ"
+  },
+  "metrics": {
+    "since_year": 2021,
+    "citations": {
+      "all": 8,
+      "since": 4
+    },
+    "h_index": {
+      "all": 2,
+      "since": 1
+    },
+    "i10_index": {
+      "all": 0,
+      "since": 0
+    }
+  },
+  "citations_per_year": [],
+  "publications": [
+    {
+      "title": "Detection of oil leak and seawater influx through partial ruptures in subsea petroleum production pipelines",
+      "authors": "DC Barrionuevo, GH de Oliveira, AC Faller, SC Vieira, BW Assmann, ...",
+      "venue": "Journal of the Brazilian Society of Mechanical Sciences and Engineering 48",
+      "year": 2026,
+      "citations": 0,
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=75eaBvIAAAAJ&citation_for_view=75eaBvIAAAAJ:9yKSN-GCB0IC",
+      "cited_by_url": null
+    },
+    {
+      "title": "Data-Driven and Hybrid Modeling of Hydrate Plugging Risks in Oil Wells",
+      "authors": "JNE Carneiro, RC Branco, FM Barrocas, ML Scramignon, MBA Alonso, ...",
+      "venue": "Offshore Technology Conference, D041S047R005",
+      "year": 2026,
+      "citations": 1,
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=75eaBvIAAAAJ&citation_for_view=75eaBvIAAAAJ:2osOgNQ5qMEC",
+      "cited_by_url": null
+    },
+    {
+      "title": "Replication data for: steady-state 1D two-phase flow differentiable modeling, learning from field data and inverse problem applications in oil wells",
+      "authors": "AC Faller, SC Vieria, MS Castro",
+      "venue": "Faller, Anderson Carlos",
+      "year": 2026,
+      "citations": 0,
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=75eaBvIAAAAJ&citation_for_view=75eaBvIAAAAJ:d1gkVwhDpl0C",
+      "cited_by_url": null
+    },
+    {
+      "title": "Steady-state 1D two-phase flow differentiable modeling: learning from field data and inverse problem applications in oil wells",
+      "authors": "AC Faller, SC Vieira, MS Castro",
+      "venue": "Frontiers in Chemical Engineering 7, 1687048",
+      "year": 2026,
+      "citations": 1,
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=75eaBvIAAAAJ&citation_for_view=75eaBvIAAAAJ:u5HHmVD_uO8C",
+      "cited_by_url": null
+    },
+    {
+      "title": "High-Quality Synthetic Dataset Generation for Enhanced Anomaly Detection of Hydrate Plugging in Oil Wells",
+      "authors": "JNE Carneiro, RC Branco, J De Oliveira, JVB Alves, FM Barrocas, ...",
+      "venue": "Offshore Technology Conference Brasil, D021S023R002",
+      "year": 2025,
+      "citations": 2,
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=75eaBvIAAAAJ&citation_for_view=75eaBvIAAAAJ:qjMakFHDy7sC",
+      "cited_by_url": null
+    },
+    {
+      "title": "VIP-Intelligent Production Surveillance: An Innovative Approach for Second Layer Monitoring in the Oil and Gas Industry",
+      "authors": "AL Del Puppo, AC Faller, DC Barrionuevo, JCD de Araújo, JL Ribeiro, ...",
+      "venue": "",
+      "year": 2024,
+      "citations": 0,
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=75eaBvIAAAAJ&citation_for_view=75eaBvIAAAAJ:u-x6o8ySG0sC",
+      "cited_by_url": null
+    },
+    {
+      "title": "Desenvolvimento de uma plataforma para otimização da produção em tempo real em campos de petróleo operados por gas-lift",
+      "authors": "AC Faller",
+      "venue": "Monografia de Graduação, Universidade Federal de Santa Catarina, Curso de…",
+      "year": 2009,
+      "citations": 4,
+      "url": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=75eaBvIAAAAJ&citation_for_view=75eaBvIAAAAJ:UeHWp8X0CEIC",
+      "cited_by_url": null
+    }
+  ],
+  "updated": "2026-10-17T23:15:16Z"
+}
