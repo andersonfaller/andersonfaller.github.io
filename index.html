@@ -1,938 +1,412 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anderson Faller | Portfolio</title>
+    <title>Anderson Faller</title>
+    <meta name="description" content="Anderson Faller — engineer working where scientific computing meets artificial intelligence. Research, interests and a few puzzles.">
+    <meta name="theme-color" content="#0a0e14">
+    <meta property="og:title" content="Anderson Faller">
+    <meta property="og:description" content="Engineer working where scientific computing meets artificial intelligence.">
+    <meta property="og:url" content="https://faller.one/">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-    <!-- Google Fonts: Montserrat & Inter -->
+    <!-- Theme before first paint: saved choice, else the system preference -->
+    <script>
+        (function () {
+            var theme;
+            try { theme = localStorage.getItem('theme'); } catch (e) {}
+            if (theme !== 'light' && theme !== 'dark') {
+                theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Phosphor Icons (Used for UI elements like scroll arrow) -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/site.css">
 
-    <!-- Font Awesome CDN (Used for Social Icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#2C3E50',  /* Deep Slate Blue */
-                            bg: '#F8F9FA',    /* Off-White */
-                            gray: '#7F8C8D',  /* Cool Grey */
-                            light: '#E5E7EB', /* Light Gray border */
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Montserrat', 'sans-serif'],
-                        mono: ['monospace'], /* Default mono for technical links */
-                    },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
-                        'bounce-slow': 'bounce 2s infinite',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    },
-                    boxShadow: {
-                        'soft': '0 4px 6px -1px rgba(44, 62, 80, 0.1), 0 2px 4px -1px rgba(44, 62, 80, 0.06)',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Previne o FOUC (Flash of Unstyled Content) */
-        html { background-color: #F8F9FA; }
-        body { opacity: 0; transition: opacity 0.5s ease-out; }
-
-        /* Custom Utilities for Scroll Reveal */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Smooth Scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* PCB Canvas Setup */
-        #pcbCanvas {
-            display: block;
-            width: 100%;
-            height: 160px;
-            pointer-events: none; /* Garante que o usuário possa rolar por cima sem interrupções */
-        }
-
-        /* Subtle Bubbles Animation */
-        .bubble {
-            position: absolute;
-            bottom: -100px;
-            /* Gradiente sutil para dar um levíssimo volume */
-            background: radial-gradient(circle at 30% 30%, rgba(44, 62, 80, 0.03), rgba(44, 62, 80, 0.01));
-            border: 1px solid rgba(44, 62, 80, 0.08);
-            border-radius: 50%;
-            animation: floatUp infinite ease-in-out;
-        }
-
-        @keyframes floatUp {
-            0% { 
-                transform: translateY(0) translateX(0) scale(0.8); 
-                opacity: 0; 
-            }
-            10% { 
-                opacity: 1; 
-            }
-            80% {
-                opacity: 1;
-            }
-            100% { 
-                /* Move para cima 120vh (passando da tela) e oscila no eixo X */
-                transform: translateY(-120vh) translateX(30px) scale(1.2); 
-                opacity: 0; 
-            }
-        }
-    </style>
+    <noscript>
+        <style>
+            .gate { display: none !important; }
+            body.is-locked { overflow: auto; }
+            .reveal { opacity: 1 !important; transform: none !important; }
+        </style>
+    </noscript>
 </head>
-<body class="bg-brand-bg text-brand-dark overflow-x-hidden selection:bg-brand-dark selection:text-white">
+<body class="is-locked">
 
-    <!-- ================= LIGHTS OUT PUZZLE OVERLAY ================= -->
-    <div id="lights-out-overlay" class="fixed inset-0 z-[100] bg-brand-bg flex flex-col items-center justify-center transition-opacity duration-1000">
-        <div class="text-center mb-8 animate-fade-in-up" style="animation-delay: 0.1s;">
-            <h1 class="font-heading font-black text-3xl md:text-4xl text-brand-dark mb-2 tracking-tight">faller.one</h1>
-        </div>
-        
-        <!-- Grid 5x5 -->
-        <div id="puzzle-grid" class="grid grid-cols-5 gap-1.5 md:gap-2 p-3 md:p-4 bg-white rounded-xl shadow-soft animate-fade-in-up" style="animation-delay: 0.3s;">
-            <!-- Botões injetados via JavaScript -->
-        </div>
+    <!-- Rising bubbles behind everything (two-phase flow, live) -->
+    <canvas id="flow" aria-hidden="true"></canvas>
 
-        <!-- Botão Discreto Light Chasing -->
-        <button onclick="openChasingModal()" class="mt-8 font-sans text-xs text-brand-gray hover:text-brand-dark transition-colors animate-fade-in-up" style="animation-delay: 0.5s;">
-            light chasing
+    <!-- ================= LIGHTS OUT GATE ================= -->
+    <div id="gate" class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-rule">
+        <button class="icon-btn gate__theme js-theme" type="button" aria-label="Toggle light and dark theme">
+            <i class="fa-solid fa-sun icon-sun"></i><i class="fa-solid fa-moon icon-moon"></i>
         </button>
 
-        <!-- Chasing Table Modal (Pop-up) -->
-        <div id="chasing-modal" class="absolute inset-0 z-10 bg-brand-bg/95 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-            <div class="bg-white p-6 md:p-8 rounded-xl shadow-soft border border-brand-light relative max-w-[340px] w-full mx-4">
-                <button onclick="closeChasingModal()" class="absolute top-4 right-4 text-brand-gray hover:text-brand-dark transition-colors">
-                    <i class="ph ph-x text-lg"></i>
-                </button>
-                
-                <div class="text-center mb-6 mt-2">
-                    <p class="font-sans text-xs text-brand-gray">tip: when only bottom row is lit...</p>
-                </div>
+        <div class="gate__inner">
+            <h1 id="gate-title" class="gate__brand">faller<span>.</span>one</h1>
+            <p id="gate-rule" class="gate__rule mono">all off — or all on — opens the door</p>
 
-                <div class="grid grid-cols-[1fr_auto_1fr] gap-2 md:gap-4 text-center text-[10px] md:text-xs font-heading font-bold uppercase tracking-wider text-brand-gray mb-6">
-                    <div>bottom is</div>
-                    <div></div>
-                    <div>toggle on top</div>
-                </div>
-                
-                <div id="chasing-table-body" class="flex flex-col gap-3 md:gap-4">
-                    <!-- Linhas da tabela serão injetadas aqui -->
-                </div>
+            <div id="board" class="board" role="group" aria-label="Lights Out puzzle, 5 by 5"></div>
+
+            <div class="gate__bar mono">
+                <span>moves <b id="moves">0</b></span>
+                <span class="gate__sep" aria-hidden="true">·</span>
+                <button id="shuffle" class="linkbtn" type="button">shuffle</button>
+                <span class="gate__sep" aria-hidden="true">·</span>
+                <button id="hint-open" class="linkbtn" type="button">light chasing</button>
             </div>
         </div>
+
+        <dialog id="hint" class="hint" aria-labelledby="hint-title">
+            <button id="hint-close" class="icon-btn hint__close" type="button" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h2 id="hint-title" class="hint__title">Light chasing</h2>
+            <p class="hint__text">Chase the lights down, row by row: under every lit cell, press the one right below it. When only the bottom row is lit…</p>
+            <div class="hint__head mono"><span>bottom is</span><span></span><span>press on top</span></div>
+            <div id="hint-table" class="hint__table"></div>
+            <p class="hint__text hint__text--small">…then chase again.</p>
+        </dialog>
     </div>
 
-    <!-- Main Site Content (Escondido inicialmente) -->
-    <div id="main-site" class="opacity-0 transition-opacity duration-1000 pointer-events-none" style="display: none;">
+    <!-- ================= SITE ================= -->
+    <div id="site" class="site">
 
-        <!-- Bubbles Background Container -->
-        <div id="bubbles-container" class="fixed inset-0 pointer-events-none z-0"></div>
-
-        <!-- ================= HERO SECTION ================= -->
-        <section class="min-h-screen flex flex-col items-center justify-center p-6 relative z-10">
-            
-            <!-- Top Text -->
-            <p class="font-sans text-brand-gray tracking-[0.3em] text-sm md:text-base uppercase mb-4 animate-fade-in-up opacity-0" style="animation-delay: 0.1s;">
-                faller.one
-            </p>
-
-            <!-- Main Name -->
-            <h1 class="font-heading font-black text-5xl md:text-7xl lg:text-9xl tracking-tighter leading-tight mb-6 animate-fade-in-up opacity-0 text-brand-dark text-center" style="animation-delay: 0.3s;">
-                Anderson<br class="md:hidden"> Faller
-            </h1>
-
-            <!-- Divider -->
-            <div class="w-16 h-1 bg-brand-dark mx-auto mb-8 animate-fade-in-up opacity-0" style="animation-delay: 0.5s;"></div>
-
-            <!-- CTA -->
-            <div class="animate-fade-in-up opacity-0" style="animation-delay: 0.7s;">
-                <a href="mailto:anderson.faller@gmail.com" class="font-sans font-medium text-brand-gray hover:text-brand-dark transition-colors border-b border-transparent hover:border-brand-dark pb-0.5 tracking-wide">
-                    CONTACT ME
+        <header id="nav" class="nav">
+            <div class="nav__inner">
+                <a class="logo" href="#top" aria-label="Anderson Faller, back to top">
+                    <span class="logo__mark" aria-hidden="true">AF</span>
+                    <span class="logo__text">faller.one</span>
                 </a>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-10 animate-fade-in-up flex flex-col items-center gap-2 cursor-pointer opacity-0" style="animation-delay: 1.5s; animation-fill-mode: forwards;">
-                <span class="text-[10px] uppercase tracking-widest text-brand-gray">Scroll</span>
-                <i class="ph ph-caret-down text-2xl text-brand-dark animate-bounce-slow"></i>
-            </div>
-        </section>
-
-
-        <!-- ================= BIO SECTION ================= -->
-        <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto reveal-on-scroll relative z-10">
-            <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-8 text-center md:text-left">
-                // Bio
-            </h2>
-            <p class="font-sans text-xl md:text-2xl font-light leading-relaxed text-brand-dark md:text-justify">
-                Jana's husband, Julia's father. I am a Control and Automation Engineer with a Master's degree in Petroleum Sciences and Engineering. Currently employed at Petrobras, I work in Oil Production Monitoring and Optimization, with a strong focus on Research and Development, specializing in the intersection of Scientific Computing and Artificial Intelligence.
-            </p>
-        </section>
-
-
-        <!-- ================= SOCIAL SECTION ================= -->
-        <section class="py-24 px-6 md:px-12 bg-white reveal-on-scroll relative z-10 shadow-sm">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 text-center">
-                    // Connect
-                </h2>
-                <div class="flex justify-center gap-8 md:gap-16 flex-wrap">
-                    <!-- Email -->
-                    <a href="mailto:anderson.faller@gmail.com" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                            <i class="fa-solid fa-envelope text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                        </div>
-                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Email</span>
-                    </a>
-
-                    <!-- GitHub -->
-                    <a href="https://github.com/andersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                            <i class="fa-brands fa-github text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                        </div>
-                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">GitHub</span>
-                    </a>
-
-                    <!-- LinkedIn -->
-                    <a href="https://www.linkedin.com/in/anderson-faller-31420116/" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                            <i class="fa-brands fa-linkedin-in text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                        </div>
-                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">LinkedIn</span>
-                    </a>
-                    
-                    <!-- X / Twitter -->
-                    <a href="https://x.com/andersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                            <i class="fa-brands fa-x-twitter text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                        </div>
-                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Twitter / X</span>
-                    </a>
-
-                    <!-- Instagram -->
-                    <a href="https://www.instagram.com/oandersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                            <i class="fa-brands fa-instagram text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                        </div>
-                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Instagram</span>
-                    </a>
-
-                    <!-- Facebook -->
-                    <a href="https://www.facebook.com/andersonfaller" target="_blank" class="group flex flex-col items-center gap-3 transition-transform hover:-translate-y-2">
-                        <div class="p-4 rounded-full bg-brand-bg group-hover:bg-brand-dark transition-colors duration-300 w-16 h-16 flex items-center justify-center">
-                            <i class="fa-brands fa-facebook-f text-3xl text-brand-dark group-hover:text-white transition-colors"></i>
-                        </div>
-                        <span class="font-sans text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Facebook</span>
-                    </a>
+                <nav aria-label="Sections">
+                    <ul id="nav-links" class="nav__links">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#research">Research</a></li>
+                        <li><a href="#interests">Interests</a></li>
+                        <li><a href="#play">Playground</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="nav__actions">
+                    <button class="icon-btn js-theme" type="button" aria-label="Toggle light and dark theme">
+                        <i class="fa-solid fa-sun icon-sun"></i><i class="fa-solid fa-moon icon-moon"></i>
+                    </button>
+                    <button id="menu-btn" class="icon-btn nav__menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                 </div>
             </div>
-        </section>
+        </header>
 
+        <main>
+            <!-- ================= HERO ================= -->
+            <section id="top" class="hero">
+                <div class="hero__inner">
+                    <p class="eyebrow mono reveal"><span class="eyebrow__dot" aria-hidden="true"></span>faller.one</p>
 
-        <!-- ================= PUBLICATIONS SECTION ================= -->
-        <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto reveal-on-scroll relative z-10">
-            <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 border-b border-brand-light pb-4">
-                // Publications
-            </h2>
-            
-            <div class="space-y-12">
-                <!-- Novo Paper -->
-                <article class="group">
-                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2026</span>
-                        <div>
-                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                                Detection of oil leak and seawater influx through partial ruptures in subsea petroleum production pipelines
-                            </h3>
-                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                                Authors: Barrionuevo, D. C., Oliveira, G. H., Faller, A. C., Vieira, S. C., Assmann, B. W., Araújo, J. C. D., & Pavlov, A.
-                            </p>
-                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                                Journal of the Brazilian Society of Mechanical Sciences and Engineering, Vol. 48, Issue 7
-                            </p>
-                            <!-- Links -->
-                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                                <a href="https://doi.org/10.1007/s40430-026-06488-2" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                                <a href="publications/s40430-026-06488-2.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+                    <h1 id="hero-title" class="hero__name reveal" style="--d: 1" tabindex="-1">
+                        Anderson <em>Faller</em>
+                    </h1>
 
-                <!-- Item 1 (Frontiers) -->
-                <article class="group">
-                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2026</span>
-                        <div>
-                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                                Steady-state 1D two-phase flow differentiable modeling: learning from field data and inverse problem applications in oil wells
-                            </h3>
-                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                                Authors: Faller, A. C., Vieira, S. C., & Castro, M. S.
-                            </p>
-                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                                Frontiers in Chemical Engineering, Vol. 7
-                            </p>
-                            <!-- Links -->
-                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                                <a href="https://www.frontiersin.org/journals/chemical-engineering/articles/10.3389/fceng.2025.1687048/full" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                                <a href="publications/Faller et all - Differentiable Modeling - Published.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+                    <p class="hero__lead reveal" style="--d: 2">
+                        Engineer working where <em>scientific computing</em> meets <em>artificial intelligence</em>, monitoring and optimizing oil production at Petrobras.
+                    </p>
 
-                <!-- Item 2 (SPE Brazil FATC) -->
-                <article class="group">
-                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2024</span>
-                        <div>
-                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                                Oil Leak and Seawater Influx Through Partial Ruptures in Subsea Petroleum Production Pipelines
-                            </h3>
-                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                                Authors: Barrionuevo, D. C., Faller, A. C., Assman, B. W., Oliveira, G. H., Araújo, J. C. D., Vieira, S. C., & Rodrigues, T. M.
-                            </p>
-                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                                SPE Brazil Flow Assurance Technology Congress (FATC)
-                            </p>
-                            <!-- Links -->
-                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                                <a href="https://spebrazilfatc.com.br/wp-content/uploads/2024/12/095-Oil-Leak-and-Seawater-Influx-Through-Partial-Ruptures-in-Subsea-Petroleum-Production-Pipelines.pdf" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                                <a href="publications/095-Oil-Leak-and-Seawater-Influx-Through-Partial-Ruptures-in-Subsea-Petroleum-Production-Pipelines.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+                    <p class="hero__also mono reveal" style="--d: 3">
+                        <span class="hero__also-label">off the clock →</span>
+                        <span id="typer" class="typer" aria-hidden="true">kung fu</span>
+                        <span class="visually-hidden">chess, kung fu, home brewing, heavy metal, abstract strategy games, cosmology, electronics and math.</span>
+                    </p>
 
-                <!-- Item 3 (COBEM) -->
-                <article class="group">
-                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2023</span>
-                        <div>
-                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                                Data-Driven Multiphase Flow Parameters Prediction Capabilities and Limitations on a Real Oil Well Production Data
-                            </h3>
-                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                                Authors: Faller, A. C., Vieira, S. C., Foresti, B. P., Fabro, A. T., & Castro, M. S.
-                            </p>
-                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                                27th ABCM International Congress of Mechanical Engineering (COBEM)
-                            </p>
-                            <!-- Links -->
-                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                                <a href="https://doi.org/10.26678/ABCM.COBEM2023.COB2023-1242" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                                <a href="publications/Faller_VFM_COBEM_2023_rev_final.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                 <!-- Item 4 (JEM) -->
-                 <article class="group">
-                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
-                        <span class="font-heading font-bold text-brand-gray text-sm md:w-16">2023</span>
-                        <div>
-                            <h3 class="font-heading font-bold text-xl text-brand-dark group-hover:text-brand-gray transition-colors leading-tight">
-                                A Machine Learning Approach on Two-Phase Flow Characterization and Calculation Based on a Large Experimental Dataset
-                            </h3>
-                            <p class="font-sans text-sm text-brand-dark/80 mt-2">
-                                Authors: Faller, A. C., Paulo, P. H. C., Vieira, S. C., Fabro, A. T., & Castro, M. S.
-                            </p>
-                            <p class="font-sans text-sm text-brand-gray mt-1 italic">
-                                7th Multiphase Flow Journeys (JEM)
-                            </p>
-                            <!-- Links -->
-                            <div class="mt-2 text-xs font-mono text-brand-dark/70">
-                                <a href="https://abcm.org.br/upload/files/Anais%20JEM%202023.pdf" target="_blank" class="hover:text-brand-dark hover:underline mr-2 transition-all">[link]</a>
-                                <a href="publications/Anais JEM 2023 - p 35-36.pdf" target="_blank" class="hover:text-brand-dark hover:underline transition-all">[pdf]</a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-
-        <!-- ================= INTERESTS SECTION ================= -->
-        <section class="py-24 px-6 md:px-12 bg-white reveal-on-scroll relative z-10 shadow-sm">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 border-b border-brand-light pb-4">
-                    // Interests
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    
-                    <!-- Interest 1: AI & Physics -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">AI & Physics</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            My research lies at the intersection of rigorous physical modeling and data-driven approaches. I apply Machine Learning to solve complex inverse problems in fluid dynamics and multiphase flow, bridging the gap between experimental data and theoretical models.
-                        </p>
-                    </div>
-
-                    <!-- Interest 2: Programming -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Programming</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            I view code as a medium for structure and logic. From architecting robust full-stack web solutions to developing scientific computing pipelines in Python, I focus on writing clean, maintainable software that solves complex problems efficiently.
-                        </p>
-                    </div>
-
-                    <!-- Interest 3: Language Models -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Language Models</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            I am highly interested in the practical applications of Large Language Models (LLMs) within engineering and scientific domains. My focus is on leveraging these models to optimize technical workflows and assist in complex problem-solving. Previously, I also explored AI safety and alignment through my work on <a href="https://github.com/andersonfaller/detoxlm" target="_blank" class="text-brand-dark font-medium hover:underline">DetoxLM</a> <a href="publications/DetoxLM - Anderson Faller - Trabalho Final.pdf" target="_blank" class="font-mono text-xs text-brand-dark/70 hover:text-brand-dark hover:underline ml-1 transition-all">[pdf]</a>.
-                        </p>
-                    </div>
-
-                    <!-- Interest 4: Chess -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Chess</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            An amateur player with a deep appreciation for the game's complexity. My interest extends beyond the board into chess programming and engine development. Challenge me on <a href="https://www.chess.com/member/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Chess.com</a> or <a href="https://lichess.org/@/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">Lichess</a>. Also, try my <a href="http://faller.one/blind-chess-terminal" target="_blank" class="text-brand-dark font-medium hover:underline">Blind Chess Terminal app</a>.
-                        </p>
-                    </div>
-
-                    <!-- Interest 5: Abstract Strategy Games -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Abstract Strategy Games</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            Beyond chess, I explore the mechanics of games like Tak and Lines of Action (LoA). I enjoy analyzing their unique emergent complexity. Check out my simple <a href="http://faller.one/loa" target="_blank" class="text-brand-dark font-medium hover:underline">LoA engine</a> or try my custom puzzle variant <a href="https://faller.one/knights-out/" target="_blank" class="text-brand-dark font-medium hover:underline">Knights Out</a>.
-                        </p>
-                    </div>
-
-                    <!-- Interest 6: Music & Instruments -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Music & Instruments</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            Music provides a great counterbalance to technical work. My musical taste leans towards heavy metal, progressive rock, and indie rock. I enjoy the discipline of learning instruments and the creative energy of playing. You can listen to some of my casual musical experiments on <a href="https://soundcloud.com/andersonfaller" target="_blank" class="text-brand-dark font-medium hover:underline">SoundCloud</a>.
-                        </p>
-                    </div>
-
-                    <!-- Interest 7: Pop Cosmology & Astrophysics -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Pop Cosmology & Astrophysics</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            Fascinated by the vastness of the universe, black holes, and the origins of spacetime. I enjoy reading accessible literature on the subject to grasp the macro-scale mechanics of our reality and our place within it.
-                        </p>
-                    </div>
-
-                    <!-- Interest 8: Pop Quantum Physics -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Pop Quantum Physics</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            Intrigued by the counter-intuitive nature of the quantum realm. I enjoy exploring concepts like entanglement and superposition through popular science, balancing my deterministic engineering background with the probabilistic wonders of nature.
-                        </p>
-                    </div>
-
-                    <!-- Interest 9: Math -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Math</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed mb-4">
-                            Seriously, what the...
-                        </p>
-                        <a href="https://www.combinatorics.org/files/Surveys/ds7/ds7v5-2009/ds7-2009.html" target="_blank" class="block overflow-hidden rounded-lg border border-brand-light shadow-sm hover:shadow-md transition-all duration-300">
-                            <img src="images/square_packing_17.jpeg" alt="Best known optimal square packing for 17 squares" class="w-full h-auto hover:scale-105 transition-transform duration-500">
+                    <div class="hero__cta reveal" style="--d: 4">
+                        <a class="btn btn--primary" href="mailto:anderson.faller@gmail.com">
+                            <i class="fa-solid fa-envelope"></i> Get in touch
+                        </a>
+                        <a class="btn" href="#research">
+                            <i class="fa-brands fa-google-scholar"></i> Research
                         </a>
                     </div>
-
-                    <!-- Interest 10: Electronics -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Electronics</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            Occasional design and prototyping. 
-                        </p>
-                    </div>
-
-                    <!-- Interest 11: Beer -->
-                    <div>
-                        <h3 class="font-heading font-bold text-lg text-brand-dark mb-3">Beer</h3>
-                        <p class="font-sans text-brand-gray text-sm leading-relaxed">
-                            Tasting, teaching and home brewing. Approx. 100 batches, some <a href="https://untappd.com/b/cervejaria-eisenbahn-ventura/1006781" target="_blank" class="text-brand-dark font-medium hover:underline">prizes</a> and stuff...
-                        </p>
-                    </div>
-
                 </div>
+
+                <a class="hero__scroll mono" href="#about" aria-label="Scroll to About">
+                    <span>scroll</span><i class="fa-solid fa-arrow-down"></i>
+                </a>
+                <p class="hero__flow mono" aria-hidden="true">two-phase flow, live · click a bubble</p>
+            </section>
+
+            <!-- ================= ABOUT ================= -->
+            <section id="about" class="section">
+                <div class="section__inner">
+                    <header class="section__head reveal">
+                        <span class="section__idx mono">01</span>
+                        <span class="section__kicker mono">about</span>
+                        <h2 class="section__title">Hello, I'm <em>Anderson</em>.</h2>
+                    </header>
+
+                    <div class="about">
+                        <p class="about__lead reveal">Jana's husband, Julia's father.</p>
+                        <div class="about__body">
+                            <p class="reveal" style="--d: 1">
+                                I am a Control and Automation Engineer with a Master's degree in Petroleum Sciences and Engineering. Currently employed at Petrobras, I work in Oil Production Monitoring and Optimization, with a strong focus on Research and Development, specializing in the intersection of Scientific Computing and Artificial Intelligence.
+                            </p>
+                            <dl class="facts">
+                                <div class="fact surface reveal" style="--d: 2">
+                                    <dt class="mono">now</dt>
+                                    <dd>Petrobras · oil production monitoring &amp; optimization</dd>
+                                </div>
+                                <div class="fact surface reveal" style="--d: 3">
+                                    <dt class="mono">focus</dt>
+                                    <dd>R&amp;D at the intersection of scientific computing &amp; AI</dd>
+                                </div>
+                                <div class="fact surface reveal" style="--d: 4">
+                                    <dt class="mono">education</dt>
+                                    <dd>Control &amp; Automation Engineering · M.Sc. Petroleum Sciences &amp; Engineering</dd>
+                                </div>
+                                <div class="fact surface reveal" style="--d: 5">
+                                    <dt class="mono">lately</dt>
+                                    <dd>Learning kung fu, one stance at a time</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= RESEARCH (mirrored from Google Scholar) ================= -->
+            <section id="research" class="section">
+                <div class="section__inner">
+                    <header class="section__head reveal">
+                        <span class="section__idx mono">02</span>
+                        <span class="section__kicker mono">research</span>
+                        <h2 class="section__title">Publications, <em>mirrored</em> from Google Scholar.</h2>
+                    </header>
+
+                    <div id="scholar" class="scholar" aria-live="polite">
+                        <div id="scholar-metrics" class="metrics reveal"></div>
+                        <ol id="scholar-pubs" class="pubs surface reveal"></ol>
+                        <div class="scholar__foot reveal">
+                            <p id="scholar-updated" class="scholar__updated mono">Loading Google Scholar data…</p>
+                            <a class="btn" href="https://scholar.google.com/citations?user=75eaBvIAAAAJ" target="_blank" rel="noopener">
+                                <i class="fa-brands fa-google-scholar"></i> Full profile on Google Scholar
+                                <i class="fa-solid fa-arrow-up-right-from-square btn__ext"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= INTERESTS ================= -->
+            <section id="interests" class="section">
+                <div class="section__inner">
+                    <header class="section__head reveal">
+                        <span class="section__idx mono">03</span>
+                        <span class="section__kicker mono">interests</span>
+                        <h2 class="section__title">Things I <em>care</em> about.</h2>
+                    </header>
+
+                    <div id="bento" class="bento">
+
+                        <article class="card card--wide surface reveal">
+                            <span class="card__icon"><i class="fa-solid fa-wave-square"></i></span>
+                            <span class="card__tag mono">research</span>
+                            <h3>AI &amp; Physics</h3>
+                            <p>My research lies at the intersection of rigorous physical modeling and data-driven approaches. I apply Machine Learning to solve complex inverse problems in fluid dynamics and multiphase flow, bridging the gap between experimental data and theoretical models.</p>
+                            <div class="pipe" aria-hidden="true"><div class="pipe__flow"></div></div>
+                            <p class="card__caption mono">two-phase slug flow</p>
+                        </article>
+
+                        <article class="card surface reveal" style="--d: 1">
+                            <span class="card__icon"><i class="fa-solid fa-code"></i></span>
+                            <span class="card__tag mono">craft</span>
+                            <h3>Programming</h3>
+                            <p>I view code as a medium for structure and logic. From architecting robust full-stack web solutions to developing scientific computing pipelines in Python, I focus on writing clean, maintainable software that solves complex problems efficiently.</p>
+                        </article>
+
+                        <article class="card surface reveal">
+                            <span class="card__icon"><i class="fa-solid fa-robot"></i></span>
+                            <span class="card__tag mono">research</span>
+                            <h3>Language Models</h3>
+                            <p>I am highly interested in the practical applications of Large Language Models (LLMs) within engineering and scientific domains. My focus is on leveraging these models to optimize technical workflows and assist in complex problem-solving. Previously, I also explored AI safety and alignment through my work on <a href="https://github.com/andersonfaller/detoxlm" target="_blank" rel="noopener">DetoxLM</a> <a class="mono card__pdf" href="publications/DetoxLM - Anderson Faller - Trabalho Final.pdf" target="_blank" rel="noopener">[pdf]</a>.</p>
+                        </article>
+
+                        <article class="card surface reveal" style="--d: 1">
+                            <span class="card__icon"><i class="fa-solid fa-chess-knight"></i></span>
+                            <span class="card__tag mono">games</span>
+                            <h3>Chess</h3>
+                            <p>An amateur player with a deep appreciation for the game's complexity. My interest extends beyond the board into chess programming and engine development. Challenge me on <a href="https://www.chess.com/member/andersonfaller" target="_blank" rel="noopener">Chess.com</a> or <a href="https://lichess.org/@/andersonfaller" target="_blank" rel="noopener">Lichess</a>. Also, try my <a href="https://faller.one/blind-chess-terminal" target="_blank" rel="noopener">Blind Chess Terminal app</a>.</p>
+                        </article>
+
+                        <article class="card card--tall surface reveal" style="--d: 2">
+                            <span class="card__icon"><i class="fa-solid fa-square-root-variable"></i></span>
+                            <span class="card__tag mono">wonder</span>
+                            <h3>Math</h3>
+                            <p>Seriously, what the...</p>
+                            <a class="card__figure" href="https://www.combinatorics.org/files/Surveys/ds7/ds7v5-2009/ds7-2009.html" target="_blank" rel="noopener">
+                                <img src="images/square_packing_17.jpeg" alt="Best known packing of 17 unit squares into a square" loading="lazy" width="614" height="614">
+                            </a>
+                            <p class="card__caption mono">17 squares, best known packing</p>
+                        </article>
+
+                        <article class="card surface reveal">
+                            <span class="card__icon"><i class="fa-solid fa-chess-board"></i></span>
+                            <span class="card__tag mono">games</span>
+                            <h3>Abstract Strategy Games</h3>
+                            <p>Beyond chess, I explore the mechanics of games like Tak and Lines of Action (LoA). I enjoy analyzing their unique emergent complexity. Check out my simple <a href="https://faller.one/loa" target="_blank" rel="noopener">LoA engine</a> or try my custom puzzle variant <a href="https://faller.one/knights-out/" target="_blank" rel="noopener">Knights Out</a>.</p>
+                        </article>
+
+                        <article class="card surface reveal" style="--d: 1">
+                            <span class="card__icon"><i class="fa-solid fa-guitar"></i></span>
+                            <span class="card__tag mono">music</span>
+                            <h3>Music &amp; Instruments</h3>
+                            <p>Music provides a great counterbalance to technical work. My musical taste leans towards heavy metal, progressive rock, and indie rock. I enjoy the discipline of learning instruments and the creative energy of playing. You can listen to some of my casual musical experiments on <a href="https://soundcloud.com/andersonfaller" target="_blank" rel="noopener">SoundCloud</a>.</p>
+                        </article>
+
+                        <article class="card card--wide card--new surface reveal">
+                            <i class="fa-solid fa-yin-yang card__mark" aria-hidden="true"></i>
+                            <span class="card__icon"><i class="fa-solid fa-yin-yang"></i></span>
+                            <span class="card__tag mono"><span class="badge">new</span> body &amp; mind</span>
+                            <h3>Kung Fu</h3>
+                            <p>My newest discipline. I recently started training kung fu, and it has been a humbling, joyful lesson in patience, balance and focus: a beginner's mind, one stance at a time. A welcome counterweight to hours spent in front of a screen.</p>
+                        </article>
+
+                        <article class="card surface reveal" style="--d: 1">
+                            <span class="card__icon"><i class="fa-solid fa-beer-mug-empty"></i></span>
+                            <span class="card__tag mono">craft</span>
+                            <h3>Beer</h3>
+                            <p>Tasting, teaching and home brewing. Approx. 100 batches, some <a href="https://untappd.com/b/cervejaria-eisenbahn-ventura/1006781" target="_blank" rel="noopener">prizes</a> and stuff...</p>
+                        </article>
+
+                        <article class="card surface reveal">
+                            <span class="card__icon"><i class="fa-solid fa-meteor"></i></span>
+                            <span class="card__tag mono">curiosity</span>
+                            <h3>Pop Cosmology &amp; Astrophysics</h3>
+                            <p>Fascinated by the vastness of the universe, black holes, and the origins of spacetime. I enjoy reading accessible literature on the subject to grasp the macro-scale mechanics of our reality and our place within it.</p>
+                        </article>
+
+                        <article class="card surface reveal" style="--d: 1">
+                            <span class="card__icon"><i class="fa-solid fa-atom"></i></span>
+                            <span class="card__tag mono">curiosity</span>
+                            <h3>Pop Quantum Physics</h3>
+                            <p>Intrigued by the counter-intuitive nature of the quantum realm. I enjoy exploring concepts like entanglement and superposition through popular science, balancing my deterministic engineering background with the probabilistic wonders of nature.</p>
+                        </article>
+
+                        <article class="card surface reveal" style="--d: 2">
+                            <span class="card__icon"><i class="fa-solid fa-microchip"></i></span>
+                            <span class="card__tag mono">tinkering</span>
+                            <h3>Electronics</h3>
+                            <p>Occasional design and prototyping.</p>
+                        </article>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= PLAYGROUND ================= -->
+            <section id="play" class="section">
+                <div class="section__inner">
+                    <header class="section__head reveal">
+                        <span class="section__idx mono">04</span>
+                        <span class="section__kicker mono">playground</span>
+                        <h2 class="section__title">Come <em>play</em>.</h2>
+                    </header>
+
+                    <div class="play">
+                        <figure class="frame surface reveal">
+                            <iframe id="lichess" title="Lichess daily puzzle" src="https://lichess.org/training/frame?theme=brown&amp;bg=dark" loading="lazy" allowtransparency="true"></iframe>
+                            <figcaption class="mono">daily puzzle · <a href="https://lichess.org" target="_blank" rel="noopener">lichess.org</a></figcaption>
+                        </figure>
+
+                        <div class="projects">
+                            <a class="project surface reveal" href="https://faller.one/knights-out/" target="_blank" rel="noopener">
+                                <span class="card__icon"><i class="fa-solid fa-chess-knight"></i></span>
+                                <span class="project__body">
+                                    <span class="project__title">Knights Out</span>
+                                    <span class="project__text">My custom puzzle variant. If you enjoyed the door, try this one.</span>
+                                </span>
+                                <i class="fa-solid fa-arrow-right project__arrow" aria-hidden="true"></i>
+                            </a>
+                            <a class="project surface reveal" style="--d: 1" href="https://faller.one/loa" target="_blank" rel="noopener">
+                                <span class="card__icon"><i class="fa-solid fa-chess-board"></i></span>
+                                <span class="project__body">
+                                    <span class="project__title">LoA engine</span>
+                                    <span class="project__text">A simple engine for Lines of Action.</span>
+                                </span>
+                                <i class="fa-solid fa-arrow-right project__arrow" aria-hidden="true"></i>
+                            </a>
+                            <a class="project surface reveal" style="--d: 2" href="https://faller.one/blind-chess-terminal" target="_blank" rel="noopener">
+                                <span class="card__icon"><i class="fa-solid fa-terminal"></i></span>
+                                <span class="project__body">
+                                    <span class="project__title">Blind Chess Terminal</span>
+                                    <span class="project__text">Chess without seeing the board.</span>
+                                </span>
+                                <i class="fa-solid fa-arrow-right project__arrow" aria-hidden="true"></i>
+                            </a>
+
+                            <div class="challenge reveal" style="--d: 3">
+                                <p class="mono">challenge me</p>
+                                <div class="challenge__links">
+                                    <a class="chip" href="https://www.chess.com/member/andersonfaller" target="_blank" rel="noopener"><i class="fa-solid fa-chess-pawn"></i> Chess.com</a>
+                                    <a class="chip" href="https://lichess.org/@/andersonfaller" target="_blank" rel="noopener"><i class="fa-solid fa-chess-rook"></i> Lichess</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= CONTACT ================= -->
+            <section id="contact" class="section section--contact">
+                <div class="section__inner">
+                    <header class="section__head reveal">
+                        <span class="section__idx mono">05</span>
+                        <span class="section__kicker mono">contact</span>
+                        <h2 class="section__title">Let's <em>talk</em>.</h2>
+                    </header>
+
+                    <div class="contact">
+                        <div class="contact__mail reveal">
+                            <a class="contact__address" href="mailto:anderson.faller@gmail.com">anderson.faller@gmail.com</a>
+                            <button id="copy-email" class="icon-btn" type="button" data-email="anderson.faller@gmail.com" aria-label="Copy email address">
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                            <span id="copy-status" class="contact__copied mono" role="status"></span>
+                        </div>
+
+                        <ul class="socials reveal" style="--d: 1">
+                            <li><a class="chip" href="https://scholar.google.com/citations?user=75eaBvIAAAAJ" target="_blank" rel="noopener"><i class="fa-brands fa-google-scholar"></i> Google Scholar</a></li>
+                            <li><a class="chip" href="https://github.com/andersonfaller" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a></li>
+                            <li><a class="chip" href="https://www.linkedin.com/in/anderson-faller-31420116/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a></li>
+                            <li><a class="chip" href="https://x.com/andersonfaller" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a></li>
+                            <li><a class="chip" href="https://www.instagram.com/oandersonfaller" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                            <li><a class="chip" href="https://www.facebook.com/andersonfaller" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i> Facebook</a></li>
+                            <li><a class="chip" href="https://soundcloud.com/andersonfaller" target="_blank" rel="noopener"><i class="fa-brands fa-soundcloud"></i> SoundCloud</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <canvas id="pcb" aria-hidden="true"></canvas>
+            <div class="footer__bar">
+                <p>&copy; <span id="year"></span> Anderson Faller</p>
+                <p id="door-moves" class="mono footer__moves"></p>
+                <a class="mono" href="#top">back to top ↑</a>
             </div>
-        </section>
-
-        <!-- ================= DAILY PUZZLE SECTION ================= -->
-        <section class="py-24 px-6 md:px-12 max-w-4xl mx-auto reveal-on-scroll relative z-10">
-            <h2 class="font-heading font-bold text-sm tracking-[0.2em] uppercase text-brand-gray mb-12 border-b border-brand-light pb-4">
-                // Daily Puzzle
-            </h2>
-            
-            <div class="flex flex-col items-center justify-center">
-                <iframe src="https://lichess.org/training/frame?theme=grey&bg=light" style="width: 100%; max-width: 400px; aspect-ratio: 5/6;" allowtransparency="true" frameborder="0" class="rounded-lg shadow-md border border-brand-light"></iframe>
-                <p class="font-sans text-xs text-brand-gray mt-4">
-                    Source: <a href="https://lichess.org" target="_blank" class="hover:text-brand-dark hover:underline transition-colors">Lichess</a>
-                </p>
-            </div>
-        </section>
-
-        <!-- ================= DECORATIVE PCB SECTION ================= -->
-        <section class="w-full overflow-hidden reveal-on-scroll">
-            <canvas id="pcbCanvas"></canvas>
-        </section>
-
-        <!-- Footer -->
-        <footer class="py-8 text-center text-brand-gray opacity-50 relative z-10">
-            <span class="font-heading font-bold text-2xl text-brand-dark/20">AF</span>
-            <p class="text-xs font-sans mt-4">&copy; <span id="year"></span> Anderson Faller</p>
         </footer>
+    </div>
 
-    </div> <!-- Fim do main-site wrapper -->
-
-    <!-- Scripts -->
-    <script>
-        // Update Year
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Scroll Reveal Logic
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1 // Trigger when 10% of element is visible
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal-on-scroll').forEach((element) => {
-            observer.observe(element);
-        });
-
-        // ================= LIGHT CHASING MODAL SCRIPT =================
-        function openChasingModal() {
-            document.getElementById('chasing-modal').classList.remove('opacity-0', 'pointer-events-none');
-        }
-
-        function closeChasingModal() {
-            document.getElementById('chasing-modal').classList.add('opacity-0', 'pointer-events-none');
-        }
-
-        // Função responsável por construir as linhas e os quadrados da tabela
-        function renderChasingTable() {
-            const tableData = [
-                [[1,1,1,0,0], [0,1,0,0,0]],
-                [[1,1,0,1,1], [0,0,1,0,0]],
-                [[1,0,1,1,0], [0,0,0,0,1]],
-                [[1,0,0,0,1], [1,1,0,0,0]],
-                [[0,1,1,0,1], [1,0,0,0,0]],
-                [[0,1,0,1,0], [1,0,0,1,0]],
-                [[0,0,1,1,1], [0,0,0,1,0]]
-            ];
-            
-            const container = document.getElementById('chasing-table-body');
-            
-            // Só renderiza se não tiver elementos HTML dentro (ignora o comentário de texto)
-            if (container.children.length > 0) return; 
-
-            tableData.forEach(row => {
-                // Wrapper da linha (grid com 3 colunas: estado, flecha, ação)
-                const rowDiv = document.createElement('div');
-                rowDiv.className = 'grid grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4';
-
-                // Bloco esquerdo (Bottom Is)
-                const leftDiv = document.createElement('div');
-                leftDiv.className = 'flex gap-1 justify-center';
-                row[0].forEach(val => {
-                    const dot = document.createElement('div');
-                    dot.className = `w-3 h-3 md:w-4 md:h-4 rounded-sm ${val ? 'bg-brand-dark shadow-inner' : 'bg-brand-light'}`;
-                    leftDiv.appendChild(dot);
-                });
-
-                // Flecha central
-                const arrowDiv = document.createElement('div');
-                arrowDiv.className = 'text-brand-gray/50 text-xs';
-                arrowDiv.innerHTML = '<i class="ph ph-arrow-right"></i>';
-
-                // Bloco direito (Toggle on Top)
-                const rightDiv = document.createElement('div');
-                rightDiv.className = 'flex gap-1 justify-center';
-                row[1].forEach(val => {
-                    const dot = document.createElement('div');
-                    dot.className = `w-3 h-3 md:w-4 md:h-4 rounded-sm ${val ? 'bg-brand-dark shadow-inner' : 'bg-brand-light'}`;
-                    rightDiv.appendChild(dot);
-                });
-
-                // Monta a linha e adiciona ao container
-                rowDiv.appendChild(leftDiv);
-                rowDiv.appendChild(arrowDiv);
-                rowDiv.appendChild(rightDiv);
-                container.appendChild(rowDiv);
-            });
-        }
-
-        // ================= LIGHTS OUT PUZZLE SCRIPT =================
-        let puzzleGrid = Array(5).fill().map(() => Array(5).fill(false));
-        let puzzleSolved = false;
-
-        function initPuzzle() {
-            const gridElement = document.getElementById('puzzle-grid');
-            gridElement.innerHTML = ''; // Limpa caso seja necessário reiniciar
-
-            // Gera um estado embaralhado e garantidamente resolvível
-            for(let i = 0; i < 15; i++) {
-                let r = Math.floor(Math.random() * 5);
-                let c = Math.floor(Math.random() * 5);
-                toggleInternal(r, c);
-            }
-            
-            // Garante que o jogo não inicie já resolvido
-            if(checkWinCondition()) toggleInternal(0,0);
-
-            // Renderiza os botões
-            for (let r = 0; r < 5; r++) {
-                for (let c = 0; c < 5; c++) {
-                    const btn = document.createElement('button');
-                    btn.id = `cell-${r}-${c}`;
-                    // Cores de alto contraste: brand-dark (Ligado) vs brand-light (Desligado)
-                    btn.className = `w-12 h-12 sm:w-14 sm:h-14 rounded-md transition-all duration-300 cursor-pointer hover:opacity-80 active:scale-95 ${puzzleGrid[r][c] ? 'bg-brand-dark shadow-inner' : 'bg-brand-light'}`;
-                    btn.onclick = () => handleCellClick(r, c);
-                    gridElement.appendChild(btn);
-                }
-            }
-        }
-
-        function toggleInternal(r, c) {
-            const dirs = [[0,0], [0,1], [0,-1], [1,0], [-1,0]];
-            for(let [dr, dc] of dirs) {
-                let nr = r + dr, nc = c + dc;
-                if(nr >= 0 && nr < 5 && nc >= 0 && nc < 5) {
-                    puzzleGrid[nr][nc] = !puzzleGrid[nr][nc];
-                }
-            }
-        }
-
-        function handleCellClick(r, c) {
-            if (puzzleSolved) return;
-            
-            toggleInternal(r, c);
-            
-            // Atualiza as classes do DOM visualmente
-            for (let row = 0; row < 5; row++) {
-                for (let col = 0; col < 5; col++) {
-                    const btn = document.getElementById(`cell-${row}-${col}`);
-                    if (puzzleGrid[row][col]) {
-                        btn.className = 'w-12 h-12 sm:w-14 sm:h-14 rounded-md transition-all duration-300 cursor-pointer hover:opacity-80 active:scale-95 bg-brand-dark shadow-inner';
-                    } else {
-                        btn.className = 'w-12 h-12 sm:w-14 sm:h-14 rounded-md transition-all duration-300 cursor-pointer hover:opacity-80 active:scale-95 bg-brand-light';
-                    }
-                }
-            }
-
-            if (checkWinCondition()) {
-                puzzleSolved = true;
-                setTimeout(unlockSite, 500); // Pequeno delay satisfatório após o último clique
-            }
-        }
-
-        function checkWinCondition() {
-            // Verifica se todos os quadrados estão false (desligados) OU todos true (ligados)
-            const allOff = puzzleGrid.every(row => row.every(cell => !cell));
-            const allOn = puzzleGrid.every(row => row.every(cell => cell));
-            
-            return allOff || allOn;
-        }
-
-        function unlockSite() {
-            const overlay = document.getElementById('lights-out-overlay');
-            const mainSite = document.getElementById('main-site');
-            
-            // Fade out do puzzle
-            overlay.style.opacity = '0';
-            
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                
-                // Prepara o site principal
-                mainSite.style.display = 'block';
-                
-                // Força o navegador a recalcular o layout antes de aplicar a opacidade
-                void mainSite.offsetWidth; 
-                
-                // Fade in do site
-                mainSite.style.opacity = '1';
-                mainSite.style.pointerEvents = 'auto';
-                
-                // Inicia os elementos visuais agora que o site está vísivel
-                createBubbles(); 
-                resizePcb(); // Recalcula as dimensões do Canvas PCB
-                
-            }, 1000); // Sincronizado com a duração da transição
-        }
-
-        // ================= BUBBLES GENERATOR SCRIPT =================
-        function createBubbles() {
-            const container = document.getElementById('bubbles-container');
-            const bubbleCount = 15; // Número sutil de bolhas simultâneas
-
-            for (let i = 0; i < bubbleCount; i++) {
-                const bubble = document.createElement('div');
-                bubble.classList.add('bubble');
-                
-                // Randomiza tamanho, posição, duração e atraso
-                const size = Math.random() * 60 + 15; // Tamanho entre 15px e 75px
-                const leftPos = Math.random() * 100; // Posição horizontal 0% a 100%
-                const duration = Math.random() * 20 + 20; // Tempo de subida: 20s a 40s (bem lento)
-                const delay = Math.random() * -40; // Atraso negativo para algumas já começarem no meio da tela
-
-                bubble.style.width = `${size}px`;
-                bubble.style.height = `${size}px`;
-                bubble.style.left = `${leftPos}%`;
-                bubble.style.animationDuration = `${duration}s`;
-                bubble.style.animationDelay = `${delay}s`;
-
-                // Altera levemente a direção do movimento horizontal de algumas bolhas
-                if (Math.random() > 0.5) {
-                    bubble.style.animationDirection = 'alternate-reverse';
-                }
-
-                container.appendChild(bubble);
-            }
-        }
-
-        // ================= PCB GENERATOR SCRIPT =================
-        const canvas = document.getElementById('pcbCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        const numPoints = 8; // Ajustado para 8 para ficar harmonioso na altura reduzida
-        const mainColor = 'rgba(44, 62, 80, 0.15)'; // Azul Ardósia bem transparente (Watermark)
-        const bgColor = '#F8F9FA'; // Cor do fundo da página (Off-White)
-        
-        let paths = [];
-        let leftPads = [];
-        let rightPads = [];
-        
-        function resizePcb() {
-            canvas.width = window.innerWidth;
-            canvas.height = 160; // Altura fixa decorativa
-            generateCircuit(); 
-        }
-        
-        window.addEventListener('resize', resizePcb);
-
-        function generateCircuit() {
-            leftPads = [];
-            rightPads = [];
-            paths = [];
-            
-            const paddingY = 30;
-            const availableHeight = canvas.height - paddingY * 2;
-            const spacing = availableHeight / (numPoints - 1);
-            
-            const startX = 50;
-            const endX = canvas.width - 50;
-            
-            let currentTrackMap = []; 
-            
-            for (let i = 0; i < numPoints; i++) {
-                let yPos = paddingY + i * spacing;
-                leftPads.push({ x: startX, y: yPos, color: mainColor });
-                rightPads.push({ x: endX, y: yPos, color: mainColor });
-                paths.push({
-                    id: i, color: mainColor, width: 2,
-                    points: [{ x: startX, y: yPos }],
-                    segments: [], length: 0, vias: []
-                });
-                currentTrackMap.push(i);
-            }
-
-            let currentX = startX + 20 + Math.random() * 20;
-            for (let i = 0; i < numPoints; i++) {
-                paths[currentTrackMap[i]].points.push({ x: currentX, y: paddingY + i * spacing });
-            }
-
-            while (currentX + spacing + 40 < endX) {
-                let isSwapping = new Array(numPoints - 1).fill(false);
-                let hasSwap = false;
-
-                for (let j = 0; j < numPoints - 1; j++) {
-                    if (j > 0 && isSwapping[j - 1]) continue; 
-                    if (Math.random() < 0.40) {
-                        isSwapping[j] = true;
-                        hasSwap = true;
-                    }
-                }
-
-                if (!hasSwap && numPoints > 1) {
-                    let randomJ = Math.floor(Math.random() * (numPoints - 1));
-                    isSwapping[randomJ] = true;
-                }
-
-                let nextX = currentX + spacing;
-
-                for (let j = 0; j < numPoints; j++) {
-                    let pathId = currentTrackMap[j];
-                    if (j < numPoints - 1 && isSwapping[j]) {
-                        paths[pathId].points.push({ x: nextX, y: paddingY + (j + 1) * spacing });
-                    } else if (j > 0 && isSwapping[j - 1]) {
-                        paths[pathId].points.push({ x: nextX, y: paddingY + (j - 1) * spacing });
-                    } else {
-                        paths[pathId].points.push({ x: nextX, y: paddingY + j * spacing });
-                    }
-                }
-
-                for (let j = 0; j < numPoints - 1; j++) {
-                    if (isSwapping[j]) {
-                        let temp = currentTrackMap[j];
-                        currentTrackMap[j] = currentTrackMap[j+1];
-                        currentTrackMap[j+1] = temp;
-                    }
-                }
-
-                currentX = nextX;
-                let straightPause = 20 + Math.random() * 40;
-                if (currentX + straightPause > endX) straightPause = endX - currentX;
-                nextX = currentX + straightPause;
-
-                for (let j = 0; j < numPoints; j++) {
-                    let pathId = currentTrackMap[j];
-                    paths[pathId].points.push({ x: nextX, y: paddingY + j * spacing });
-                }
-                currentX = nextX;
-            }
-
-            for (let j = 0; j < numPoints; j++) {
-                let pathId = currentTrackMap[j];
-                paths[pathId].points.push({ x: endX, y: paddingY + j * spacing });
-                rightPads[j].color = paths[pathId].color; 
-            }
-
-            for (let pathObj of paths) {
-                let totalLen = 0;
-                let segments = [];
-                let pts = pathObj.points;
-                
-                for (let i = 0; i < pts.length - 1; i++) {
-                    let dx = pts[i+1].x - pts[i].x;
-                    let dy = pts[i+1].y - pts[i].y;
-                    let len = Math.sqrt(dx*dx + dy*dy);
-                    segments.push({ start: pts[i], dx: dx, dy: dy, len: len });
-                    totalLen += len;
-                }
-                pathObj.segments = segments;
-                pathObj.length = totalLen;
-
-                for (let i = 1; i < pts.length - 1; i++) {
-                    let prev = pts[i-1];
-                    let curr = pts[i];
-                    let next = pts[i+1];
-                    let isPrevHorizontal = (prev.y === curr.y);
-                    let isNextHorizontal = (curr.y === next.y);
-                    
-                    if (isPrevHorizontal !== isNextHorizontal && Math.random() < 0.6) {
-                        pathObj.vias.push(curr);
-                    }
-                }
-            }
-            drawPcb();
-        }
-
-        function drawPad(x, y, color) {
-            ctx.beginPath();
-            ctx.arc(x, y, 5, 0, Math.PI * 2);
-            ctx.fillStyle = color;
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(x, y, 2, 0, Math.PI * 2);
-            ctx.fillStyle = bgColor;
-            ctx.fill();
-        }
-
-        function drawVia(x, y, color) {
-            ctx.beginPath();
-            ctx.arc(x, y, 3, 0, Math.PI * 2);
-            ctx.fillStyle = color;
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(x, y, 1, 0, Math.PI * 2);
-            ctx.fillStyle = bgColor;
-            ctx.fill();
-        }
-
-        function drawPcb() {
-            ctx.fillStyle = bgColor;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Grid super sutil (opcional, ajustado para quase invisível)
-            ctx.strokeStyle = 'rgba(44, 62, 80, 0.02)';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            for(let x=0; x<canvas.width; x+=20) { ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); }
-            for(let y=0; y<canvas.height; y+=20) { ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); }
-            ctx.stroke();
-
-            for (let pathObj of paths) {
-                let pts = pathObj.points;
-                ctx.beginPath();
-                ctx.moveTo(pts[0].x, pts[0].y);
-                for (let i = 1; i < pts.length; i++) {
-                    ctx.lineTo(pts[i].x, pts[i].y);
-                }
-                ctx.strokeStyle = pathObj.color;
-                ctx.lineWidth = pathObj.width;
-                ctx.lineJoin = 'round';
-                ctx.lineCap = 'round';
-                ctx.stroke();
-                
-                for (let via of pathObj.vias) {
-                    drawVia(via.x, via.y, pathObj.color);
-                }
-            }
-
-            for (let pad of leftPads) drawPad(pad.x, pad.y, pad.color);
-            for (let pad of rightPads) drawPad(pad.x, pad.y, pad.color);
-        }
-
-        // ================= INICIALIZAÇÃO GERAL =================
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '1';
-            renderChasingTable(); // Prepara o modal da tabela logo no carregamento
-            initPuzzle(); // Inicia o puzzle
-        });
-
-    </script>
-
+    <script src="assets/js/flow.js" defer></script>
+    <script src="assets/js/gate.js" defer></script>
+    <script src="assets/js/scholar.js" defer></script>
+    <script src="assets/js/circuit.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>
