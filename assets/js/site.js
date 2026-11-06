@@ -86,8 +86,7 @@
     // ---------- "off the clock" typer ----------
 
     const typer = document.getElementById('typer');
-    const words = ['kung fu', 'chess', 'home brewing', 'heavy metal', 'Lines of Action',
-        'black holes', 'square packing', 'electronics', 'progressive rock', 'Tak'];
+    const words = ['kung fu', 'chess', 'home brewing', 'music', 'programming'];
 
     function startTyper() {
         let w = 0;
