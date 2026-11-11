@@ -91,7 +91,7 @@
         board.height = canvas.height;
         const c = board.getContext('2d');
         c.setTransform(dpr, 0, 0, dpr, 0, 0);
-        const color = `rgba(${trace}, 0.22)`;
+        const color = `rgba(${trace}, 0.15)`;
 
         c.lineWidth = 2;
         c.lineJoin = 'round';
@@ -133,7 +133,7 @@
                 const p = pointAt(path, s);
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, k === 0 ? 2.6 : 2.2 - k * 0.15, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${glow}, ${0.9 * (1 - k / 10)})`;
+                ctx.fillStyle = `rgba(${glow}, ${0.55 * (1 - k / 10)})`;
                 ctx.fill();
             }
         }

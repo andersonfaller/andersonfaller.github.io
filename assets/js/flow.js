@@ -47,7 +47,7 @@
         canvas.height = Math.round(H * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        const target = Math.round(Math.min(70, Math.max(16, (W * H) / 26000)));
+        const target = Math.round(Math.min(50, Math.max(12, (W * H) / 34000)));
         while (bubbles.length < target) bubbles.push(reset({}, false));
         bubbles.length = target;
         if (!running) draw(0);
@@ -120,21 +120,21 @@
         const ry = r * (1 - squash);
 
         const fill = ctx.createRadialGradient(x - r * 0.3, y - r * 0.35, r * 0.1, x, y, r);
-        fill.addColorStop(0, `rgba(${colors.bubble}, 0.02)`);
-        fill.addColorStop(0.72, `rgba(${colors.bubble}, 0.06)`);
-        fill.addColorStop(1, `rgba(${colors.bubble}, 0.2)`);
+        fill.addColorStop(0, `rgba(${colors.bubble}, 0)`);
+        fill.addColorStop(0.72, `rgba(${colors.bubble}, 0.012)`);
+        fill.addColorStop(1, `rgba(${colors.bubble}, 0.05)`);
         ctx.beginPath();
         ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
         ctx.fillStyle = fill;
         ctx.fill();
         ctx.lineWidth = 1;
-        ctx.strokeStyle = `rgba(${colors.bubble}, 0.38)`;
+        ctx.strokeStyle = `rgba(${colors.bubble}, 0.11)`;
         ctx.stroke();
 
         if (r > 5) {
             ctx.beginPath();
             ctx.ellipse(x - rx * 0.38, y - ry * 0.42, r * 0.22, r * 0.11, -0.75, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${colors.shine}, 0.4)`;
+            ctx.fillStyle = `rgba(${colors.shine}, 0.1)`;
             ctx.fill();
         }
     }
@@ -147,10 +147,10 @@
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
             if (p.ring) {
                 ctx.lineWidth = 1.5;
-                ctx.strokeStyle = `rgba(${colors.bubble}, ${0.5 * p.life})`;
+                ctx.strokeStyle = `rgba(${colors.bubble}, ${0.22 * p.life})`;
                 ctx.stroke();
             } else {
-                ctx.fillStyle = `rgba(${colors.bubble}, ${0.45 * p.life})`;
+                ctx.fillStyle = `rgba(${colors.bubble}, ${0.18 * p.life})`;
                 ctx.fill();
             }
         }
