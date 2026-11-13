@@ -721,6 +721,7 @@ h1, h2, h3, p, figure { margin: 0; }
 
 .card--wide { grid-column: span 2; }
 .card--tall { grid-row: span 2; display: flex; flex-direction: column; }
+.card--full { grid-column: 1 / -1; }
 
 .card__icon {
     display: grid;
@@ -766,9 +767,11 @@ h1, h2, h3, p, figure { margin: 0; }
 .card--new:hover .card__mark { transform: rotate(180deg); }
 
 .card h3 { font-size: 1.2rem; font-weight: 650; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 10px; }
-.card--wide h3 { font-size: 1.45rem; }
+.card--wide h3,
+.card--full h3 { font-size: 1.45rem; }
 .card p { font-size: 15px; line-height: 1.65; color: var(--text-2); }
-.card--wide p { max-width: 62ch; }
+.card--wide p,
+.card--full p { max-width: 62ch; }
 .card a {
     color: var(--text);
     font-weight: 500;
@@ -823,6 +826,8 @@ h1, h2, h3, p, figure { margin: 0; }
 
 @media (max-width: 960px) {
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* two columns leave one free cell at the end: the podcast card fills it */
+    .card--full { grid-column: auto; }
 }
 @media (max-width: 620px) {
     .bento { grid-template-columns: 1fr; }
@@ -839,6 +844,10 @@ h1, h2, h3, p, figure { margin: 0; }
     align-items: start;
 }
 .frame { padding: 12px; border-radius: 24px; container-type: inline-size; }
+/* the puzzle stays in view while the project list scrolls past */
+@media (min-width: 861px) {
+    .frame { position: sticky; top: 96px; }
+}
 .frame iframe {
     display: block;
     width: 100%;
