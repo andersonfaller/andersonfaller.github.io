@@ -91,6 +91,10 @@ body {
 
 body.is-locked { overflow: hidden; }
 
+/* <html data-gate="off"> skips the door; the puzzle stays implemented */
+[data-gate="off"] .gate { display: none; }
+[data-gate="off"] body.is-locked { overflow: auto; }
+
 [hidden] { display: none !important; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }

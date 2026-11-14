@@ -13,6 +13,18 @@
     let solved = false;
     const cells = [];
 
+    // <html data-gate="off"> skips the door and opens the site right away
+    if (document.documentElement.dataset.gate === 'off') {
+        gate.hidden = true;
+        document.body.classList.remove('is-locked');
+        // fire after the other deferred scripts have added their listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            document.dispatchEvent(new Event('site:opening'));
+            document.dispatchEvent(new Event('site:unlocked'));
+        });
+        return;
+    }
+
     site.inert = true;
     site.setAttribute('aria-hidden', 'true');
 
