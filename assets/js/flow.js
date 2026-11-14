@@ -226,7 +226,9 @@
         if (!running) draw(0);
     });
 
-    window.addEventListener('resize', resize);
+    // Watch the canvas box itself: Safari can settle the viewport size after load
+    // without a resize event, which would leave the bubbles stretched until a scroll.
+    new ResizeObserver(resize).observe(canvas);
     readColors();
     resize();
     start();
