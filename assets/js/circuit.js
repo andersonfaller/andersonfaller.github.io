@@ -177,7 +177,8 @@
         if (W) drawBoard();
         draw(0);
     });
-    window.addEventListener('resize', resize);
+    // Same as the bubbles: follow the canvas box, not only window resize events.
+    new ResizeObserver(resize).observe(canvas);
     // The site is hidden behind the gate until it opens; size the board then too
     document.addEventListener('site:unlocked', resize);
 
